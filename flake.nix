@@ -22,7 +22,12 @@
       ...
     }:
     let
-      system = "x86_64-linux";
+      base-system = {
+        system = "x86_64-linux";
+        specialArgs = {
+          inputs = inputs;
+        };
+      };
     in
     {
       nixConfig = {
@@ -32,16 +37,24 @@
         ];
       };
       nixosConfigurations = {
-        framework = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inputs = inputs;
-          };
-          modules = [
-            home-manager.nixosModule
-            ./hosts/framework/configuration.nix
-          ];
-        };
+        framework = nixpkgs.lib.nixosSystem (
+          base-system
+          // {
+            modules = [
+              home-manager.nixosModule
+              ./hosts/framework/configuration.nix
+            ];
+          }
+        );
+        desktop = nixpkgs.lib.nixosSystem (
+          base-system
+          // {
+            modules = [
+              home-manager.nixosModule
+              ./hosts/desktop/configuration.nix
+            ];
+          }
+        );
       };
     };
 }

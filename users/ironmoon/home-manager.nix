@@ -5,6 +5,8 @@
   ...
 }:
 {
+  home.file.".p10k.zsh".source = ./resources/.p10k.zsh;
+
   programs = {
     zsh = {
       enable = true;

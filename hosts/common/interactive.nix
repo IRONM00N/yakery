@@ -2,6 +2,7 @@
   inputs,
   config,
   pkgs,
+  pkgs-stable,
   ...
 }:
 {
@@ -63,7 +64,7 @@
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
-    fira-code-nerdfont
+    nerd-fonts.fira-code
     lato
   ];
 
@@ -84,6 +85,7 @@
   users.users.ironmoon = import ../../users/ironmoon/user.nix {
     config = config;
     pkgs = pkgs;
+    pkgs-stable = pkgs-stable;
   };
 
   # home-manager

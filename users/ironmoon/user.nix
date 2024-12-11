@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-stable,
   ...
 }:
 {
@@ -115,8 +116,15 @@
 
       texlive.combined.scheme-full
 
+      kdePackages.plasma-desktop
       kdePackages.kate
       kdePackages.kdenlive
+      kdePackages.kcolorchooser
+      kdePackages.kcalc
+      kdePackages.ksystemlog
+      libsForQt5.kde-cli-tools
+      kdePackages.plasma-firewall
+
       thunderbird
       libreoffice-qt
       hunspell
@@ -184,5 +192,11 @@
       jetbrains.clion
 
       qbittorrent
+
+      jq
+      pm2
+      dune_3
+      opam
+      ripgrep-all
     ];
 }

@@ -79,6 +79,13 @@
 
     plasma = {
       enable = true;
+      configFile = {
+        "spectaclerc"."General"."launchAction" = "UseLastUsedCapturemode";
+        "spectaclerc"."GuiConfig"."captureMode" = 0;
+      };
+      kwin = {
+        edgeBarrier = 0;
+      };
     };
 
     konsole = {
@@ -96,7 +103,7 @@
             };
             "Appearance" = {
               ColorScheme = "Campbell";
-              # don't use mono, otherwise icons are too small. 
+              # don't use mono, otherwise icons are too small.
               Font = "FiraCode Nerd Font Ret";
               # However, this seems cause bolded text to take up too much space (unlike the mono variant)
               # this means that we need to disable bolding in the font settings
@@ -155,6 +162,19 @@
             autoStash = "true";
           };
         };
+    };
+
+    firefox = {
+      enable = true;
+
+      policies = {
+        DisablePocket = true;
+        DisableTelemetry = true;
+        FirefoxSuggest = builtins.toJSON {
+          SponsoredSuggestions = false;
+          ImproveSuggest = false;
+        };
+      };
     };
   };
 

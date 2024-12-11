@@ -9,6 +9,7 @@ with pkgs;
   wget
   htop
   gnupg
+  ripgrep
 
   gcc
   gdb
@@ -20,7 +21,7 @@ with pkgs;
 
   man-pages
   tldr
-  
+
   docker
 
   neofetch

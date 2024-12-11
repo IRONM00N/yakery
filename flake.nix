@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,16 +17,23 @@
 
   outputs =
     inputs@{
+      self,
       nixpkgs,
+      nixpkgs-stable,
       home-manager,
       plasma-manager,
       ...
     }:
     let
-      base-system = {
+      base-system = rec {
         system = "x86_64-linux";
         specialArgs = {
           inputs = inputs;
+
+          pkgs-stable = import nixpkgs-stable {
+            inherit system;
+            config.allowUnfree = true;
+          };
         };
       };
     in

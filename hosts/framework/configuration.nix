@@ -26,8 +26,10 @@ in
       efiSupport = true;
       device = "nodev";
       default = "saved";
+      splashImage = null;
       extraEntries = ''
-        menuentry 'Arch Linux' --class arch --class os {
+        menuentry "Arch Linux" --class arch --class os {
+          savedefault
           insmod part_gpt
           insmod fat
           search --no-floppy --fs-uuid --set=root 2640-C7E0
@@ -35,18 +37,21 @@ in
           initrd /initramfs-linux.img
         }
 
-        menuentry 'Windows' --class windows --class os' {
+        menuentry "Windows" --class windows --class os {
+          savedefault
           insmod part_gpt
           insmod fat
           search --no-floppy --fs-uuid --set=root 2640-C7E0
           chainloader /EFI/Microsoft/Boot/bootmgfw.efi
         }
       '';
+
     };
   };
 
   networking.hostName = "framework";
   services.printing.enable = false; # enable if need to print
+  services.fwupd.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

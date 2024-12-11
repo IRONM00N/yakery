@@ -6,7 +6,7 @@ in
 base-pkgs
 ++ (with pkgs; [
   qemu
-  emacs
+  emacs-gtk
   helix
   vscode.fhs # use the built-in settings sync
   zed-editor
@@ -28,4 +28,8 @@ base-pkgs
   rustup
 
   os-prober
+
+  gef
+
+  kdePackages.filelight
 ])

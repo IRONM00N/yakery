@@ -158,13 +158,16 @@
         withMiddleClickScroll = true;
         withTTS = true;
       })
+      spotify
+
       racket
       nil
-      (minecraft.overrideAttrs (oldAttrs: {
-        meta = oldAttrs.meta // {
-          broken = false;
-        };
-      }))
+      # (minecraft.overrideAttrs (oldAttrs: {
+      #   meta = oldAttrs.meta // {
+      #     broken = false;
+      #   };
+      # }))
+      prismlauncher
       slack
 
       python3

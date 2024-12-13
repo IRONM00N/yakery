@@ -7,6 +7,9 @@
 {
   home.file.".p10k.zsh".source = ./resources/.p10k.zsh;
 
+  gtk.theme = "Breeze";
+
+
   programs = {
     zsh = {
       enable = true;

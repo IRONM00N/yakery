@@ -196,6 +196,8 @@
 
       qbittorrent
 
+      frp # fast reverse proxy
+
       jq
       pm2
       dune_3

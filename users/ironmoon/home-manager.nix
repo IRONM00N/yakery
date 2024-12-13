@@ -88,6 +88,10 @@
       };
       kwin = {
         edgeBarrier = 0;
+        virtualDesktops = {
+          number = 9;
+          rows = 3;
+        };
       };
     };
 

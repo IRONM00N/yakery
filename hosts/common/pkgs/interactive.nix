@@ -1,15 +1,11 @@
 { pkgs, ... }:
 
 let
-  base-pkgs = import ./base.nix { inherit pkgs; };
+  base-pkgs = import ./networked.nix { inherit pkgs; };
 in
 base-pkgs
 ++ (with pkgs; [
   qemu
-  emacs-gtk
-  helix
-  vscode.fhs # use the built-in settings sync
-  zed-editor
 
   exiftool
   hashcat
@@ -30,6 +26,11 @@ base-pkgs
   os-prober
 
   gef
+
+  emacs-gtk
+  helix
+  vscode.fhs # use the built-in settings sync
+  zed-editor
 
   kdePackages.filelight
 ])

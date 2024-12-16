@@ -6,7 +6,6 @@ with pkgs;
   binutils
   git
   gnumake
-  wget
   htop
   gnupg
   ripgrep
@@ -26,7 +25,4 @@ with pkgs;
 
   neofetch
   hyfetch
-
-  nmap
-  wireshark
 ]

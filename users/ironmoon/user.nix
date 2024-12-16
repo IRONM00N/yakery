@@ -13,6 +13,7 @@
     "libvirtd"
     "docker"
     "kvm"
+    "dialout"
   ];
   shell = pkgs.zsh;
 
@@ -203,5 +204,9 @@
       dune_3
       opam
       ripgrep-all
+
+      arduino-ide
+
+      element-desktop
     ];
 }

@@ -33,6 +33,7 @@
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm.wayland.compositor = "kwin";
   services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
@@ -114,5 +115,4 @@
   # generate man pages
   documentation.dev.enable = true;
   documentation.man.generateCaches = true;
-
 }

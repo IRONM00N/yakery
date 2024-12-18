@@ -25,4 +25,6 @@ with pkgs;
 
   neofetch
   hyfetch
+
+  zip
 ]

@@ -62,12 +62,18 @@
   users.defaultUserShell = pkgs.zsh;
 
   # fonts
-  fonts.packages = with pkgs; [
-    fira-code
-    fira-code-symbols
-    nerd-fonts.fira-code
-    lato
-  ];
+  fonts.packages =
+    let
+      twemoji-colr = import ../../packages/twemoji-colr/package.nix { inherit pkgs; };
+    in
+    with pkgs;
+    [
+      fira-code
+      fira-code-symbols
+      nerd-fonts.fira-code
+      lato
+      twemoji-colr
+    ];
 
   # services
   services.openssh.enable = true;
@@ -82,7 +88,7 @@
   virtualisation.docker.enable = true;
   programs.virt-manager.enable = true;
 
-  # user account. 
+  # user account.
   # set a password with `passwd`
   users.users.ironmoon = import ../../users/ironmoon/user.nix {
     config = config;

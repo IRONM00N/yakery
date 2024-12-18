@@ -20,94 +20,47 @@
   packages =
     with pkgs;
     let
-      python3 = (
-        pkgs.python3.withPackages (
-          python-pkgs: with python-pkgs; [
-            pandas
-            matplotlib
-            flask
-            flask-session
-            # requests
+      used-python-pkgs =
+        python-pkgs: with python-pkgs; [
+          pandas
+          matplotlib
+          flask
+          flask-session
+          # requests
 
-            annotated-types
-            anyio
-            certifi
-            charset-normalizer
-            distro
-            h11
-            httpcore
-            httpx
-            idna
-            openai
-            pydantic
-            pydantic-core
-            regex
-            requests
-            sniffio
-            tiktoken
-            tqdm
-            typing-extensions
-            urllib3
-            python-dotenv
+          annotated-types
+          anyio
+          certifi
+          charset-normalizer
+          distro
+          h11
+          httpcore
+          httpx
+          idna
+          openai
+          pydantic
+          pydantic-core
+          regex
+          requests
+          sniffio
+          tiktoken
+          tqdm
+          typing-extensions
+          urllib3
+          python-dotenv
 
-            ipykernel
-            grip
-            sympy
-            cryptography
-            bitarray
-            gmpy2
-            beautifulsoup4
-            pyasn1
+          ipykernel
+          grip
+          sympy
+          cryptography
+          bitarray
+          gmpy2
+          beautifulsoup4
+          pyasn1
 
-            # jd-gui
-          ]
-        )
-      );
-      vscoq = (
-        let
-          ocamlPackages = coq.ocamlPackages;
-          fetch = pkgs.fetchurl {
-            url = "https://github.com/coq-community/vscoq/releases/download/v2.2.1/vscoq-language-server-2.2.1.tar.gz";
-            sha512 = "5118f26e5b687bc918de3409870464702f3fafc0c775ad5fac4835fc7954df66beaf83bc3a413476176160773215aae1d292816c49dc192c94566bba0fbe5a5b";
-          };
-        in
-        ocamlPackages.buildDunePackage {
-          pname = "vscoq-language-server";
-          version = "2.2.1";
-          src = fetch;
-          nativeBuildInputs = [ coq ];
-          buildInputs =
-            [
-              coq
-              glib
-              adwaita-icon-theme
-              wrapGAppsHook3
-            ]
-            ++ (with ocamlPackages; [
-              findlib
-              lablgtk3-sourceview3
-              yojson
-              zarith
-              ppx_inline_test
-              ppx_assert
-              ppx_sexp_conv
-              ppx_deriving
-              ppx_import
-              sexplib
-              ppx_yojson_conv
-              lsp
-              sel
-              ppx_optcomp
-            ]);
-
-          meta = with lib; {
-            description = "Language server for the vscoq vscode/codium extension";
-            homepage = "https://github.com/coq-community/vscoq";
-            maintainers = with maintainers; [ cohencyril ];
-            license = licenses.mit;
-          };
-        }
-      );
+          # jd-gui
+        ];
+      vscoq = import ../../packages/vscoq-language-server/default.nix { inherit pkgs; };
     in
     [
       nix-index
@@ -171,7 +124,7 @@
       prismlauncher
       slack
 
-      python3
+      (python3.withPackages (used-python-pkgs))
       # yarn-berry
       nodejs_22
       corepack_22

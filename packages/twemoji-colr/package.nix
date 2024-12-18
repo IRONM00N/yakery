@@ -11,10 +11,13 @@ pkgs.stdenv.mkDerivation (final: {
     sha256 = "sha256-/6OSFbsU++3yl0PF57iXwKLwYHDycAnG7HFv8IADLRk=";
   };
 
+  # changes in fork:
+  # - change FONT_NAME to "Twemoji COLR" in Makefile
+  # - change font name Gruntfile.js
   twemojiColrSrc = pkgs.fetchFromGitHub {
     owner = "IRONM00N"; # TODO: change back to mozilla once pr 74 is merged
     repo = "twemoji-colr";
-    rev = "6a5d49565a4b2e5774bd6577fdf8716dac9f9361";
+    rev = "c431322616f5963970d2266b474db2765e4d3cd4";
     sha256 = "sha256-n5sBDLUtMvNgPn/UTNE7Z0G1hgxxdFilHM14lmU7WvU=";
   };
 

@@ -62,18 +62,32 @@
   users.defaultUserShell = pkgs.zsh;
 
   # fonts
-  fonts.packages =
-    let
-      twemoji-colr = import ../../packages/twemoji-colr/package.nix { inherit pkgs; };
-    in
-    with pkgs;
-    [
-      fira-code
-      fira-code-symbols
-      nerd-fonts.fira-code
-      lato
-      twemoji-colr
-    ];
+  fonts = {
+    enableDefaultPackages = false;
+    packages =
+      let
+        twemoji-colr = import ../../packages/twemoji-colr/package.nix { inherit pkgs; };
+        twemoji-cbdt = import ../../packages/twemoji-cbdt/package.nix { inherit pkgs; };
+      in
+      with pkgs;
+      [
+        # default minus noto-fonts-color-emoji
+        dejavu_fonts
+        freefont_ttf
+        gyre-fonts
+        liberation_ttf
+        unifont
+
+        # other
+        fira-code
+        fira-code-symbols
+        nerd-fonts.fira-code
+        lato
+        twemoji-colr
+        twemoji-cbdt
+      ];
+    fontconfig.defaultFonts.emoji = [ "Twemoji COLR" ];
+  };
 
   # services
   services.openssh.enable = true;

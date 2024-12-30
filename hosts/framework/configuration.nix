@@ -33,7 +33,7 @@ in
           insmod part_gpt
           insmod fat
           search --no-floppy --fs-uuid --set=root 2640-C7E0
-          linux /vmlinuz-linux root=UUID=ed68d7da-46d7-455b-a3a7-16b610e69aa6 rw quiet
+          linux /vmlinuz-linux root=UUID=4938a3eb-6e3f-476b-9449-b20967de3d5e rw quiet
           initrd /initramfs-linux.img
         }
 

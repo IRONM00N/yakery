@@ -13,6 +13,10 @@
   # use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # security
+  security.polkit.enable = true;
+  security.polkit.debug = true;
+
   # bluetooth
   hardware.bluetooth = {
     enable = true;
@@ -20,13 +24,13 @@
   };
 
   # audios
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = false;
-    alsa.enable = false;
-    alsa.support32Bit = false;
-    pulse.enable = false;
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
   # Enable the KDE Plasma Desktop Environment.
@@ -131,6 +135,7 @@
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
   };
+  programs.partition-manager.enable = true;
 
   # generate man pages
   documentation.dev.enable = true;

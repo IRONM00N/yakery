@@ -58,6 +58,8 @@
           beautifulsoup4
           pyasn1
 
+          setuptools
+
           # jd-gui
         ];
       vscoq = import ../../packages/vscoq-language-server/default.nix { inherit pkgs; };
@@ -76,6 +78,9 @@
       kdePackages.kcolorchooser
       kdePackages.kcalc
       kdePackages.ksystemlog
+      kdePackages.ktimer
+      kdePackages.kalarm
+      kdePackages.kweather
       libsForQt5.kde-cli-tools
       kdePackages.plasma-firewall
 
@@ -161,5 +166,9 @@
       arduino-ide
 
       element-desktop
+
+      (fontforge.override {
+        withGUI = true;
+      })
     ];
 }

@@ -11,6 +11,7 @@ in
   configFile = {
     "spectaclerc"."General"."launchAction" = "UseLastUsedCapturemode";
     "spectaclerc"."GuiConfig"."captureMode" = 0;
+    "kwinrc"."org.kde.kdecoration2"."ButtonsOnLeft" = "MNS";
   };
   kwin = {
     edgeBarrier = 0;

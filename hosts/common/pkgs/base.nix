@@ -2,6 +2,7 @@
 
 with pkgs;
 [
+  util-linux
   busybox
   binutils
   git

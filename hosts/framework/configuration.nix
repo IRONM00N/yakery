@@ -45,7 +45,6 @@ in
           chainloader /EFI/Microsoft/Boot/bootmgfw.efi
         }
       '';
-
     };
   };
 

@@ -4,11 +4,13 @@
 
 pkgs.stdenv.mkDerivation (final: {
   pname = "twemoji-colr";
-  version = "15.1.0";
+  version = "15.1.1";
 
-  src = pkgs.fetchurl {
-    url = "https://github.com/jdecked/twemoji/archive/refs/tags/v${final.version}.tar.gz";
-    sha256 = "sha256-/6OSFbsU++3yl0PF57iXwKLwYHDycAnG7HFv8IADLRk=";
+  twemojiSrc = pkgs.fetchFromGitHub {
+    owner = "IRONM00N";
+    repo = "twemoji";
+    rev = "044e4a8ae646bab4ade3c198ab980560c8f09168";
+    hash = "sha256-RrM9r8HNekzesR4IsdfZQquWWHPNarSWJLOlwtymCrU=";
   };
 
   # changes in fork:
@@ -40,14 +42,16 @@ pkgs.stdenv.mkDerivation (final: {
   };
 
   unpackPhase = ''
-    tar xvf $src
+    mkdir twemoji
+    cp -r ${final.twemojiSrc}/* twemoji/
     mkdir twemoji-colr
     cp -r ${final.twemojiColrSrc}/* twemoji-colr/
     tar -xzvf ${final.nodeModules} -C twemoji-colr
   '';
 
   buildPhase = ''
-    cd twemoji-15.1.0
+    cd twemoji
+    ls -l
     zip -r twe-svg.zip assets/svg
     mv twe-svg.zip ../twemoji-colr/
     cd ../twemoji-colr

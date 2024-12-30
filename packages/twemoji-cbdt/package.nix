@@ -9,14 +9,14 @@ let
 in
 pkgs.stdenv.mkDerivation rec {
   pname = "twemoji-cbdt";
-  version = "15.1.0";
+  version = "15.1.1";
 
   twemojiSrc = fetchFromGitHub {
     name = "twemoji";
-    owner = "jdecked";
+    owner = "IRONM00N";
     repo = "twemoji";
-    rev = "v${version}";
-    hash = "sha256-ZhbBtmVv6WK8j+JAHYbNkL5UdH9An1Rv9Cc6ZZ4OjHI=";
+    rev = "044e4a8ae646bab4ade3c198ab980560c8f09168";
+    hash = "sha256-RrM9r8HNekzesR4IsdfZQquWWHPNarSWJLOlwtymCrU=";
   };
 
   srcs = [
@@ -49,8 +49,10 @@ pkgs.stdenv.mkDerivation rec {
   postPatch =
     let
       templateSubstitutions = lib.concatStringsSep "; " [
-        "s#Noto Color Emoji#Twemoji CBDT#"
-        "s#NotoColorEmoji#TwemojiCBDT#"
+        # "s#Noto Color Emoji#Twemoji Color CBDT#"
+        "s#Noto Color Emoji#Twitter Color Emoji#"
+        # "s#NotoColorEmoji#TwemojiColorCBDT#"
+        "s#NotoColorEmoji#TwitterColorEmoji#"
         ''s#Copyright .* Google Inc\.#Twitter, Inc and other contributors.#''
         "s# Version .*# ${version}#"
         "s#.*is a trademark.*##"
@@ -63,7 +65,8 @@ pkgs.stdenv.mkDerivation rec {
     ''
       ${noto-fonts-color-emoji.postPatch}
 
-      sed '${templateSubstitutions}' NotoColorEmoji.tmpl.ttx.tmpl > TwemojiCBDT.tmpl.ttx.tmpl
+      # sed '${templateSubstitutions}' NotoColorEmoji.tmpl.ttx.tmpl > TwemojiCBDT.tmpl.ttx.tmpl
+      sed '${templateSubstitutions}' NotoColorEmoji.tmpl.ttx.tmpl > TwitterColorEmoji.tmpl.ttx.tmpl
       pushd ${twemojiSrc.name}/assets/72x72/
       for png in *.png; do
           mv $png emoji_u''${png//-/_}
@@ -72,7 +75,8 @@ pkgs.stdenv.mkDerivation rec {
     '';
 
   makeFlags = [
-    "EMOJI=TwemojiCBDT"
+    # "EMOJI=TwemojiColorCBDT"
+    "EMOJI=TwitterColorEmoji"
     "EMOJI_SRC_DIR=${twemojiSrc.name}/assets/72x72"
     "BODY_DIMENSIONS=76x72"
     "BYPASS_SEQUENCE_CHECK=True"
@@ -81,6 +85,7 @@ pkgs.stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   installPhase = ''
-    install -Dm644 TwemojiCBDT.ttf $out/share/fonts/truetype/TwemojiCBDT.ttf
+    # install -Dm644 TwemojiCBDT.ttf $out/share/fonts/truetype/TwemojiCBDT.ttf
+    install -Dm644 TwitterColorEmoji.ttf $out/share/fonts/truetype/TwitterColorEmoji.ttf
   '';
 }

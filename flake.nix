@@ -25,30 +25,40 @@
       ...
     }:
     let
+      base-config = {
+        allowUnfree = true;
+      };
       base-system = rec {
         system = "x86_64-linux";
         specialArgs = {
           inputs = inputs;
 
+          pkgs = import nixpkgs {
+            inherit system;
+            config = base-config // {
+              overlays = import ./overlays/default.nix;
+            };
+          };
           pkgs-stable = import nixpkgs-stable {
             inherit system;
-            config.allowUnfree = true;
+            config = base-config;
           };
         };
       };
-    in
-    {
       nixConfig = {
         nix.settings.experimental-features = [
           "nix-command"
           "flakes"
         ];
       };
+    in
+    {
       nixosConfigurations = {
         framework = nixpkgs.lib.nixosSystem (
           base-system
           // {
             modules = [
+              nixConfig
               home-manager.nixosModule
               ./hosts/framework/configuration.nix
             ];
@@ -58,6 +68,7 @@
           base-system
           // {
             modules = [
+              nixConfig
               home-manager.nixosModule
               ./hosts/desktop/configuration.nix
             ];

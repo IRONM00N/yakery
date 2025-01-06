@@ -24,7 +24,7 @@
   };
 
   # audios
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -87,6 +87,7 @@
         fira-code-symbols
         nerd-fonts.fira-code
         lato
+        open-sans
         twemoji-colr
         twemoji-cbdt
       ];
@@ -100,6 +101,7 @@
     nssmdns4 = true;
     openFirewall = true;
   };
+  services.udisks2.enable = true; # for calibre
 
   # virtualization
   virtualisation.libvirtd.enable = true;

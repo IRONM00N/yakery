@@ -14,8 +14,9 @@ base-pkgs
   netcat
   binwalk
   zsteg
-  steghide
-  sonic-visualiser
+  # todo: reenable when buidable
+  # steghide
+  # sonic-visualiser
 
   usbmuxd
 
@@ -33,4 +34,6 @@ base-pkgs
   zed-editor
 
   kdePackages.filelight
+
+  polkit
 ])

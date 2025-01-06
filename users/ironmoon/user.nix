@@ -170,5 +170,13 @@
       (fontforge.override {
         withGUI = true;
       })
+
+      (calibre.override {
+        unrarSupport = true; # .cbr, .cbz
+      })
+      epubcheck
+      direnv
+      nix-direnv
+      treefmt
     ];
 }

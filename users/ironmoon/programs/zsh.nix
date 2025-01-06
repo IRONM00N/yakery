@@ -16,6 +16,7 @@
     nixupdate = "sudo nixos-rebuild switch --upgrade-all";
     nixedit = "sudoedit /etc/nixos/configuration.nix";
     edit = "code --wait --new-window --disable-workspace-trust";
+    diff = "diff -u";
   };
   history = {
     size = 100000;

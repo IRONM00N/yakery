@@ -35,9 +35,8 @@
 
           pkgs = import nixpkgs {
             inherit system;
-            config = base-config // {
-              overlays = import ./overlays/default.nix;
-            };
+            config = base-config;
+            overlays = import ./overlays/default.nix;
           };
           pkgs-stable = import nixpkgs-stable {
             inherit system;

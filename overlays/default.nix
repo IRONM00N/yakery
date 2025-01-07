@@ -1,3 +1,3 @@
 [
-
+  (import ./racket.nix)
 ]

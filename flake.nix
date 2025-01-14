@@ -13,6 +13,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+  };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://ironmoon.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "ironmoon.cachix.org-1:wowGL4TAzZPBO0fCqOekQLFqim3iXzdR+hIrK/tUadI="
+    ];
   };
 
   outputs =
@@ -22,43 +32,46 @@
       nixpkgs-stable,
       home-manager,
       plasma-manager,
+      nixos-hardware,
       ...
     }:
     let
       base-config = {
         allowUnfree = true;
       };
+      nixConfig = {
+        nixpkgs.overlays = import ./overlays/default.nix;
+        nixpkgs.config = base-config;
+
+        nix.settings.experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+      };
+      base-modules = [
+        nixConfig
+        home-manager.nixosModule
+      ];
       base-system = rec {
         system = "x86_64-linux";
         specialArgs = {
           inputs = inputs;
-
-          pkgs = import nixpkgs {
-            inherit system;
-            config = base-config;
-            overlays = import ./overlays/default.nix;
-          };
           pkgs-stable = import nixpkgs-stable {
             inherit system;
             config = base-config;
           };
         };
       };
-      nixConfig = {
-        nix.settings.experimental-features = [
-          "nix-command"
-          "flakes"
-        ];
-      };
+
     in
     {
+
       nixosConfigurations = {
         framework = nixpkgs.lib.nixosSystem (
           base-system
           // {
-            modules = [
-              nixConfig
-              home-manager.nixosModule
+            modules = base-modules ++ [
+              nixos-hardware.nixosModules.framework-13-7040-amd
               ./hosts/framework/configuration.nix
             ];
           }
@@ -66,9 +79,7 @@
         desktop = nixpkgs.lib.nixosSystem (
           base-system
           // {
-            modules = [
-              nixConfig
-              home-manager.nixosModule
+            modules = base-modules ++ [
               ./hosts/desktop/configuration.nix
             ];
           }

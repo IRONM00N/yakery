@@ -28,4 +28,6 @@ with pkgs;
   hyfetch
 
   zip
+
+  cachix
 ]

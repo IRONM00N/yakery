@@ -14,8 +14,8 @@ base-pkgs
   netcat
   binwalk
   zsteg
-  # todo: reenable when buidable
-  # steghide
+  steghide
+  # todo: reenable
   # sonic-visualiser
 
   usbmuxd

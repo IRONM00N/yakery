@@ -97,6 +97,7 @@
       audacity
       zoom-us
       ocaml
+      ocamlPackages.utop
       pkg-config
       obsidian
       krita

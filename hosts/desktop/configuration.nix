@@ -6,24 +6,76 @@
   inputs,
   config,
   pkgs,
+  pkgs-stable,
   ...
 }:
 let
+  additional-user-pkgs = import ./additional-user-pkgs.nix { inherit pkgs; };
   interactive-pkgs = import ../common/pkgs/interactive.nix { inherit pkgs; };
 in
 {
   imports = [
     ./hardware-configuration.nix
-    ../common/interactive.nix
+    (import ../common/interactive.nix {
+      inherit
+        inputs
+        config
+        pkgs
+        pkgs-stable
+        additional-user-pkgs
+        ;
+    })
   ];
+
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.configurationLimit = 2;
 
   networking.hostName = "desktop";
 
-  environment.systemPackages = interactive-pkgs ++ (with pkgs; [ ]);
+  environment.systemPackages =
+    interactive-pkgs
+    ++ (with pkgs; [
+      autossh
+    ]);
+
+  services.minecraft-server = {
+    enable = true;
+    eula = true;
+    openFirewall = true;
+    package = pkgs.papermc;
+    declarative = true;
+    serverProperties = {
+      difficulty = 3;
+      motd = "ironmoon's server";
+      max-players = 21;
+      view-distance = 16;
+      enable-command-block = true;
+    };
+  };
+
+  # SSH
+  # services.fail2ban.enable = true;
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = false;
+      UsePAM = false;
+      KbdInteractiveAuthentication = false;
+      AllowUsers = [ "ironmoon" ];
+      PermitRootLogin = "no";
+    };
+  };
+  services.autossh.sessions = [
+    {
+      name = "security-nightmare";
+      user = "ironmoon";
+      extraArguments = "-M 0 -N -R 6922:localhost:22 ironmoon@ssh.ironmoon.dev";
+    }
+  ];
 
   services.pulseaudio.enable = true;
   security.rtkit.enable = true;
@@ -41,5 +93,4 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }

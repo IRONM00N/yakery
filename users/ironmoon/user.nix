@@ -2,6 +2,7 @@
   config,
   pkgs,
   pkgs-stable,
+  additional-pkgs,
   ...
 }:
 {
@@ -180,6 +181,9 @@
       nix-direnv
       treefmt
 
+      minecraft-server
       ghc
     ];
+    ]
+    ++ additional-pkgs;
 }

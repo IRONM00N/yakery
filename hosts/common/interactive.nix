@@ -3,6 +3,7 @@
   config,
   pkgs,
   pkgs-stable,
+  additional-user-pkgs,
   ...
 }:
 {
@@ -24,13 +25,13 @@
   };
 
   # audios
-  services.pulseaudio.enable = false;
+  services.pulseaudio.enable = pkgs.lib.mkDefault false;
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+    enable = pkgs.lib.mkDefault true;
+    alsa.enable = pkgs.lib.mkDefault true;
+    alsa.support32Bit = pkgs.lib.mkDefault true;
+    pulse.enable = pkgs.lib.mkDefault true;
   };
 
   # Enable the KDE Plasma Desktop Environment.
@@ -90,7 +91,7 @@
         nerd-fonts.fira-code
         lato
         open-sans
-        twemoji-colr
+        # twemoji-colr
         twemoji-cbdt
       ];
     fontconfig.defaultFonts.emoji = [ "Twemoji COLR" ];
@@ -133,6 +134,7 @@
     config = config;
     pkgs = pkgs;
     pkgs-stable = pkgs-stable;
+    additional-pkgs = additional-user-pkgs;
   };
 
   # home-manager

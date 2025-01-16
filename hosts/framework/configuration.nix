@@ -6,6 +6,7 @@
   inputs,
   config,
   pkgs,
+  pkgs-stable,
   ...
 }:
 let
@@ -14,7 +15,15 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../common/interactive.nix
+    (import ../common/interactive.nix {
+      inherit
+        inputs
+        config
+        pkgs
+        pkgs-stable
+        ;
+      additional-user-pkgs = [ ];
+    })
   ];
 
   boot.loader = {

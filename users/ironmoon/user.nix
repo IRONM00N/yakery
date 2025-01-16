@@ -183,7 +183,6 @@
 
       minecraft-server
       ghc
-    ];
     ]
     ++ additional-pkgs;
 }

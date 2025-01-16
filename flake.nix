@@ -14,6 +14,8 @@
       inputs.home-manager.follows = "home-manager";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   nixConfig = {
@@ -33,8 +35,15 @@
       home-manager,
       plasma-manager,
       nixos-hardware,
+      treefmt-nix,
+      systems,
       ...
     }:
+    let
+      lib = nixpkgs.lib;
+      eachSystem = f: lib.genAttrs (import systems) (system: f (import nixpkgs { inherit system; }));
+      treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
+    in
     let
       base-config = {
         allowUnfree = true;
@@ -62,10 +71,8 @@
           };
         };
       };
-
     in
     {
-
       nixosConfigurations = {
         framework = nixpkgs.lib.nixosSystem (
           base-system
@@ -85,5 +92,20 @@
           }
         );
       };
+
+      formatter = eachSystem (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
+
+      devShells = eachSystem (pkgs: {
+        default = pkgs.mkShell {
+          nativeBuildInputs =
+            [
+              treefmtEval.${pkgs.system}.config.build.wrapper
+            ]
+            ++ (with pkgs; [
+              nixd
+              nixfmt-rfc-style
+            ]);
+        };
+      });
     };
 }

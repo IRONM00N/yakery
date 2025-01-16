@@ -50,7 +50,9 @@
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-kde ];
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-kde
+    ];
   };
 
   # system wide environment variables
@@ -92,6 +94,23 @@
         twemoji-cbdt
       ];
     fontconfig.defaultFonts.emoji = [ "Twemoji COLR" ];
+    # fontconfig.localConf = ''
+    #   <?xml version="1.0"?>
+    #   <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+    #   <fontconfig>
+    #     <alias binding="same">
+    #       <family>Twemoji Color CBDT</family>
+    #       <default><family>emoji</family></default>
+    #     </alias>
+    #     <alias binding="same">
+    #       <family>emoji</family>
+    #       <prefer>
+    #         <family>Twemoji Color COLR</family>
+    #         <family>Twemoji Color CBDT</family>
+    #       </prefer>
+    #     </alias>
+    #   </fontconfig>
+    # '';
   };
 
   # services

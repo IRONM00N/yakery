@@ -179,5 +179,7 @@
       direnv
       nix-direnv
       treefmt
+
+      ghc
     ];
 }

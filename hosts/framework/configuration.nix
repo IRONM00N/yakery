@@ -49,7 +49,7 @@ in
   };
 
   networking.hostName = "framework";
-  services.printing.enable = false; # enable if need to print
+  services.printing.enable = true; # enable if need to print
   services.fwupd.enable = true;
 
   # List packages installed in system profile. To search, run:

@@ -11,6 +11,12 @@
     ./networked.nix
   ];
 
+  # SECURITY: this is fine for single user, personal systems.
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
+
   # use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

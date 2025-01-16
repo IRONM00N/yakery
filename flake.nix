@@ -20,9 +20,13 @@
 
   nixConfig = {
     extra-substituters = [
+      "https://nixpkgs-unfree.cachix.org"
+      "https://numtide.cachix.org"
       "https://ironmoon.cachix.org"
     ];
     extra-trusted-public-keys = [
+      "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
+      "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
       "ironmoon.cachix.org-1:wowGL4TAzZPBO0fCqOekQLFqim3iXzdR+hIrK/tUadI="
     ];
   };

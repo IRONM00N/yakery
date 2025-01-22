@@ -63,7 +63,6 @@
 
           # jd-gui
         ];
-      vscoq = import ../../packages/vscoq-language-server/default.nix { inherit pkgs; };
     in
     [
       nix-index
@@ -136,8 +135,6 @@
       nodejs_22
       corepack_22
 
-      vscoq
-      coq
 
       (wordlists.override {
         lists = with pkgs; [

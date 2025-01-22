@@ -6,12 +6,17 @@
 {
   enable = true;
 
-  policies = {
-    DisablePocket = true;
-    DisableTelemetry = true;
-    FirefoxSuggest = builtins.toJSON {
-      SponsoredSuggestions = false;
-      ImproveSuggest = false;
+  # see policies in hosts/common/programs/firefox.nix
+
+  profiles = {
+    default = {
+      id = 0;
+      isDefault = true;
+      settings = {
+        "widget.use-xdg-desktop-portal.file-picker" = 1;
+        "browser.tabs.groups.enabled" = true;
+      };
     };
   };
+
 }

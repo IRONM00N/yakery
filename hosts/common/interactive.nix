@@ -11,6 +11,10 @@
     ./networked.nix
   ];
 
+  services.resolved.enable = true;
+  services.mullvad-vpn.enable = true;
+  services.mullvad-vpn.package = pkgs.mullvad-vpn;
+
   # SECURITY: this is fine for single user, personal systems.
   nix.settings.trusted-users = [
     "root"
@@ -152,7 +156,7 @@
   };
 
   # basic programs
-  programs.firefox.enable = true;
+  programs.firefox = import ./programs/firefox.nix { inherit pkgs; };
   programs.zsh.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -167,6 +171,6 @@
   programs.partition-manager.enable = true;
 
   # generate man pages
-  documentation.dev.enable = true;
-  documentation.man.generateCaches = true;
+  # documentation.dev.enable = true;
+  # documentation.man.generateCaches = true;
 }

@@ -36,4 +36,7 @@ base-pkgs
   kdePackages.filelight
 
   polkit
+
+  mullvad-vpn
+  mullvad
 ])

@@ -69,7 +69,7 @@
       nix-index
 
       google-chrome
-      firefox
+      # firefox enabled with home-manager
 
       texlive.combined.scheme-full
 

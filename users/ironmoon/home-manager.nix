@@ -42,6 +42,7 @@
     okular = import ./programs/okular.nix { inherit inputs config pkgs; };
     git = import ./programs/git.nix { inherit inputs config pkgs; };
     firefox = import ./programs/firefox.nix { inherit inputs config pkgs; };
+    direnv = import ./programs/direnv.nix { inherit inputs config pkgs; };
   };
 
   # The state version is required and should stay at the version you

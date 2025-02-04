@@ -180,6 +180,8 @@
 
       minecraft-server
       ghc
+
+      ladybird
     ]
     ++ additional-pkgs;
 }

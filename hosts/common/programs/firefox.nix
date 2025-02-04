@@ -6,7 +6,7 @@
     DisablePocket = true;
     DisableTelemetry = true;
     FirefoxSuggest = {
-      "WebSuggestions" = true;
+      "WebSuggestions" = false;
       "SponsoredSuggestions" = false;
       "ImproveSuggest" = false;
       "Locked" = false;
@@ -15,8 +15,10 @@
       "Search" = true;
       "TopSites" = false;
       "SponsoredTopSites" = false;
+      "Highlights" = false;
       "Pocket" = false;
       "SponsoredPocket" = false;
+      "Snippets" = false;
       "Locked" = false;
     };
   };

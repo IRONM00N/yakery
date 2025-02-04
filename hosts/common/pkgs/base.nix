@@ -10,6 +10,7 @@ with pkgs;
   htop
   gnupg
   ripgrep
+  ltrace
 
   gcc
   gdb

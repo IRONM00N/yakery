@@ -3,6 +3,12 @@
   pkgs,
   ...
 }:
+let
+  common-settings = {
+    "widget.use-xdg-desktop-portal.file-picker" = 1;
+    "browser.tabs.groups.enabled" = true;
+  };
+in
 {
   enable = true;
 
@@ -11,12 +17,12 @@
   profiles = {
     default = {
       id = 0;
-      isDefault = true;
-      settings = {
-        "widget.use-xdg-desktop-portal.file-picker" = 1;
-        "browser.tabs.groups.enabled" = true;
-      };
+      settings = common-settings;
+    };
+
+    dev-edition-default = {
+      id = 1;
+      settings = common-settings;
     };
   };
-
 }

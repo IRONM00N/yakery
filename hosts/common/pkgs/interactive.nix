@@ -9,7 +9,7 @@ base-pkgs
 
   exiftool
   hashcat
-  john # the ripper
+  # john # the ripper
   hash-identifier
   netcat
   binwalk

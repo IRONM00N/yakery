@@ -20,7 +20,7 @@ pkgs.stdenv.mkDerivation (final: {
     owner = "IRONM00N"; # TODO: change back to mozilla once pr 74 is merged
     repo = "twemoji-colr";
     rev = "c431322616f5963970d2266b474db2765e4d3cd4";
-    sha256 = "sha256-n5sBDLUtMvNgPn/UTNE7Z0G1hgxxdFilHM14lmU7WvU=";
+    sha256 = "sha256-GgF+65cM3Yc+40vKKY0OL6q1wRT61zQaw6XdcBPcWUk=";
   };
 
   nativeBuildInputs = with pkgs; [

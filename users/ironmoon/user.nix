@@ -69,6 +69,7 @@
 
       google-chrome
       # firefox enabled with home-manager
+      firefox-devedition
 
       texlive.combined.scheme-full
 
@@ -182,6 +183,9 @@
       ghc
 
       ladybird
+
+      burpsuite
+      pandoc
     ]
     ++ additional-pkgs;
 }

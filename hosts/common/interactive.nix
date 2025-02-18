@@ -155,20 +155,24 @@
     users.ironmoon = import ../../users/ironmoon/home-manager.nix;
   };
 
-  # basic programs
-  programs.firefox = import ./programs/firefox.nix { inherit pkgs; };
-  programs.zsh.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
+  programs = {
+    firefox = import ./programs/firefox.nix { inherit pkgs; };
+    thunderbird = import ./programs/thunderbird.nix { inherit pkgs; };
+    zsh.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+    };
+    partition-manager.enable = true;
+    ladybird.enable = true;
+    dconf.enable = true;
   };
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-  };
-  programs.partition-manager.enable = true;
 
   # generate man pages
   # documentation.dev.enable = true;

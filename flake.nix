@@ -63,7 +63,7 @@
       };
       base-modules = [
         nixConfig
-        home-manager.nixosModule
+        home-manager.nixosModules.home-manager
       ];
       base-system = rec {
         system = "x86_64-linux";

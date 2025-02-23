@@ -29,6 +29,7 @@ with pkgs;
   hyfetch
 
   zip
+  unzip
 
   cachix
 ]

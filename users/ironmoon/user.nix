@@ -15,6 +15,7 @@
     "docker"
     "kvm"
     "dialout"
+    "input"
   ];
   shell = pkgs.zsh;
 
@@ -66,6 +67,9 @@
     in
     [
       nix-index
+      home-manager
+
+      networkmanagerapplet
 
       google-chrome
       # firefox enabled with home-manager
@@ -82,6 +86,7 @@
       kdePackages.ktimer
       kdePackages.kalarm
       kdePackages.kweather
+      kdePackages.kwallet-pam
       libsForQt5.kde-cli-tools
       kdePackages.plasma-firewall
 
@@ -135,7 +140,6 @@
       # yarn-berry
       nodejs_22
       corepack_22
-
 
       (wordlists.override {
         lists = with pkgs; [

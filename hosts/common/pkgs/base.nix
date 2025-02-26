@@ -3,6 +3,7 @@
 with pkgs;
 [
   util-linux
+  toybox
   busybox
   binutils
   git

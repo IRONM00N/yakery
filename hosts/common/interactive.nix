@@ -26,7 +26,16 @@
 
   # security
   security.polkit.enable = true;
-  security.polkit.debug = true;
+  # security.polkit.debug = true;
+  security.pam.services.login.kwallet.enable = true;
+  security.pam.services.login.kwallet.forceRun = true;
+  security.pam.services.login.kwallet.package = pkgs.lib.mkForce pkgs.kdePackages.kwallet-pam;
+  security.pam.services.ssdm.kwallet.enable = true;
+  security.pam.services.ssdm.kwallet.forceRun = true;
+  security.pam.services.ssdm.kwallet.package = pkgs.lib.mkForce pkgs.kdePackages.kwallet-pam;
+  security.pam.services.login.enableGnomeKeyring = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+  services.gnome.gnome-keyring.enable = true;
 
   # bluetooth
   hardware.bluetooth = {
@@ -51,6 +60,13 @@
   services.displayManager.sddm.wayland.compositor = "kwin";
   services.desktopManager.plasma6.enable = true;
 
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
+  programs.hyprlock.enable = true;
+  services.hypridle.enable = true;
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -61,9 +77,20 @@
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-kde
-    ];
+    configPackages =
+      with pkgs;
+      lib.mkForce [
+        kdePackages.plasma-workspace
+        hyprland
+      ];
+    extraPortals =
+      with pkgs;
+      lib.mkForce [
+        kdePackages.kwallet
+        kdePackages.xdg-desktop-portal-kde
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-hyprland
+      ];
   };
 
   # system wide environment variables
@@ -75,7 +102,11 @@
   };
 
   # zsh
-  environment.pathsToLink = [ "/share/zsh" ];
+  environment.pathsToLink = [
+    "/share/zsh"
+    "/share/xdg-desktop-portal"
+    "/share/applications"
+  ];
   users.defaultUserShell = pkgs.zsh;
 
   # fonts
@@ -173,6 +204,8 @@
     ladybird.enable = true;
     dconf.enable = true;
   };
+
+  # networking.networkmanager.plugins = [ "kwallet" "keyfile" ];
 
   # generate man pages
   # documentation.dev.enable = true;

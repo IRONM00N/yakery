@@ -33,4 +33,6 @@ with pkgs;
   unzip
 
   cachix
+
+  fastfetch
 ]

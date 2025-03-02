@@ -4,10 +4,16 @@
   pkgs,
   ...
 }:
+let
+  importMod = path: import path { inherit inputs config pkgs; };
+in
 {
   home.file.".p10k.zsh".source = ./resources/.p10k.zsh;
 
   gtk.theme = "Breeze";
+
+  # use system config. hyprland tries to override this
+  xdg.portal.enable = pkgs.lib.mkForce false;
 
   xdg.mimeApps = {
     enable = false;
@@ -36,14 +42,24 @@
   };
 
   programs = {
-    zsh = import ./programs/zsh.nix { inherit inputs config pkgs; };
-    plasma = import ./programs/plasma.nix { inherit inputs config pkgs; };
-    konsole = import ./programs/konsole.nix { inherit inputs config pkgs; };
-    okular = import ./programs/okular.nix { inherit inputs config pkgs; };
-    git = import ./programs/git.nix { inherit inputs config pkgs; };
-    firefox = import ./programs/firefox.nix { inherit inputs config pkgs; };
-    direnv = import ./programs/direnv.nix { inherit inputs config pkgs; };
+    zsh = importMod ./programs/zsh.nix;
+    plasma = importMod ./programs/plasma.nix;
+    konsole = importMod ./programs/konsole.nix;
+    okular = importMod ./programs/okular.nix;
+    git = importMod ./programs/git.nix;
+    firefox = importMod ./programs/firefox.nix;
+    direnv = importMod ./programs/direnv.nix;
+
+    waybar = importMod ./programs/waybar.nix;
+    hyprlock = importMod ./programs/hyprlock.nix;
   };
+
+  services = {
+    dunst = importMod ./services/dunst.nix;
+    hypridle = importMod ./services/hypridle.nix;
+  };
+
+  wayland.windowManager.hyprland = importMod ./hyprland.nix;
 
   # The state version is required and should stay at the version you
   # originally installed.

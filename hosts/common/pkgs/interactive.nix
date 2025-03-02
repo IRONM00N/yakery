@@ -39,4 +39,15 @@ base-pkgs
 
   mullvad-vpn
   mullvad
+
+  hyprland
+  kitty
+  hyprpicker
+  wofi
+  cliphist
+  brightnessctl
+  hyprpicker
+  hypridle
+  hyprlock
+  hyprshot
 ])

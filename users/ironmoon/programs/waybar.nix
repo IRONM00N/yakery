@@ -1,4 +1,22 @@
 { ... }:
+let
+  base00 = "#181818"; # #181818
+  base01 = "#2b2e37"; # #2b2e37
+  base02 = "#3b3e47"; # #3b3e47
+  base03 = "#585858"; # #585858
+  base04 = "#b8b8b8"; # #b8b8b8
+  base05 = "#d8d8d8"; # #d8d8d8
+  base06 = "#e8e8e8"; # #e8e8e8
+  base07 = "#f8f8f8"; # #f8f8f8
+  base08 = "#ab4642"; # #ab4642
+  base09 = "#dc9656"; # #dc9656
+  base0A = "#f7ca88"; # #f7ca88
+  base0B = "#a1b56c"; # #a1b56c
+  base0C = "#86c1b9"; # #86c1b9
+  base0D = "#7cafc2"; # #7cafc2
+  base0E = "#ba8baf"; # #ba8baf
+  base0F = "#a16946"; # #a16946
+in
 {
   enable = true;
 
@@ -69,17 +87,18 @@
       # };
       "cpu" = {
         "interval" = 1;
-        "format" = "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15}";
+        "format" =
+          "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15}";
         "format-icons" = [
           " "
-          "<span color='#69ff94'>▁</span>" # green
-          "<span color='#2aa9ff'>▂</span>" # blue
-          "<span color='#f8f8f2'>▃</span>" # white
-          "<span color='#f8f8f2'>▄</span>" # white
-          "<span color='#ffffa5'>▅</span>" # yellow
-          "<span color='#ffffa5'>▆</span>" # yellow
-          "<span color='#ff9977'>▇</span>" # orange
-          "<span color='#dd532e'>█</span>" # red
+          "<span color='#69ff94'>▁</span>" # #69ff94
+          "<span color='#2aa9ff'>▂</span>" # #2aa9ff
+          "<span color='#f8f8f2'>▃</span>" # #f8f8f2
+          "<span color='#f8f8f2'>▄</span>" # #f8f8f2
+          "<span color='#ffffa5'>▅</span>" # #ffffa5
+          "<span color='#ffffa5'>▆</span>" # #ffffa5
+          "<span color='#ff9977'>▇</span>" # #ff9977
+          "<span color='#dd532e'>█</span>" # #dd532e
         ];
       };
       "memory" = {
@@ -123,8 +142,8 @@
         "format" = "{volume}% {icon} {format_source}";
         "format-bluetooth" = "{volume}% {icon} {format_source}";
         "format-bluetooth-muted" = "󰝟 {icon} {format_source}";
-        "format-muted" = "󰝟 {format_source}";
-        "format-source" = "{volume}% ";
+        "format-muted" = "<span color='${base0F}'>󰝟</span> {format_source}";
+        "format-source" = "{volume}% <span color='${base08}'></span>";
         "format-source-muted" = " ";
         "format-icons" = {
           "headphone" = "";

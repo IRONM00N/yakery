@@ -31,8 +31,8 @@
 }
 
 #waybar {
-	/* transition: none;
-	box-shadow: none; */
+	transition: none;
+	box-shadow: none;
 
 	font-family: 'Fira Code', sans-serif;
 	font-size: 1em;
@@ -83,12 +83,15 @@
 	font-family: sans-serif;
 }
 
-#tray * {
+/* no more than 2 children otherwise the menus get messed up */
+#tray > *,
+#tray > * > * {
 	padding: 0 6px;
 	border-left: 1px solid #181818 /* base00 */;
 }
 
-#tray *:first-child {
+#tray > *,
+#tray > * > *:first-child {
 	border-left: none;
 }
 
@@ -107,7 +110,7 @@
 	min-width: 20px;
 }
 
-#pulseaudio.muted {
+#temperature.critical {
 	color: #a16946 /* base0F */;
 }
 
@@ -124,6 +127,3 @@
 	font-family: sans-serif;
 }
 
-#temperature.critical {
-	color: #a16946 /* base0F */;
-}

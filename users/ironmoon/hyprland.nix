@@ -13,7 +13,7 @@
 
     exec-once = [
       "nm-applet --indicator &"
-      "waybar &"
+      "killall waybar; waybar &"
       "wl-paste --type text --watch cliphist store"
       "wl-paste --type image --watch cliphist store"
     ];

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   enable = true;
 
@@ -54,7 +54,7 @@
       };
     };
 
-    # todo: https://wiki.hyprland.org/Configuring/Dwindle-Layout/
+    # TODO: https://wiki.hyprland.org/Configuring/Dwindle-Layout/
     dwindle = {
       pseudotile = true;
       preserve_split = true;

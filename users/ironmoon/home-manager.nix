@@ -43,7 +43,6 @@ in
 
   programs = {
     zsh = importMod ./programs/zsh.nix;
-    plasma = importMod ./programs/plasma.nix;
     konsole = importMod ./programs/konsole.nix;
     okular = importMod ./programs/okular.nix;
     git = importMod ./programs/git.nix;
@@ -52,6 +51,7 @@ in
 
     waybar = importMod ./programs/waybar.nix;
     hyprlock = importMod ./programs/hyprlock.nix;
+    kitty = importMod ./programs/kitty.nix;
   };
 
   services = {
@@ -59,7 +59,8 @@ in
     hypridle = importMod ./services/hypridle.nix;
   };
 
-  wayland.windowManager.hyprland = importMod ./hyprland.nix;
+  programs.plasma = importMod ./env/plasma.nix;
+  wayland.windowManager.hyprland = importMod ./env/hyprland.nix;
 
   # The state version is required and should stay at the version you
   # originally installed.

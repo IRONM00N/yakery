@@ -33,7 +33,8 @@
       "col.active_border" = "rgba(33ccffee)";
       "col.inactive_border" = "rgba(595959aa)";
 
-      resize_on_border = false;
+      resize_on_border = true;
+      extend_border_grab_area = 20;
 
       layout = "dwindle";
     };
@@ -64,78 +65,88 @@
       force_default_wallpaper = 0;
       disable_splash_rendering = true;
       focus_on_activate = true;
+      disable_autoreload = true;
     };
 
-    "$mainMod" = "SUPER";
+    gestures = {
+      workspace_swipe = true;
+    };
 
     # https://wiki.hyprland.org/Configuring/Binds/
-    bind = [
-      # "$mainMod, Q, exec, $terminal"
-      # "$mainMod, C, killactive,"
-      # "$mainMod, M, exit,"
-      "$mainMod, T, exec, $terminal"
-      "$mainMod, Q, killactive,"
-      "$mainMod, M, exit,"
-      "$mainMod, E, exec, $fileManager"
-      "$mainMod, F, togglefloating,"
-      "$mainMod, SPACE, exec, $menu"
-      "$mainMod, P, pseudo," # dwindle
-      "$mainMod, J, togglesplit," # dwindle
+    bind =
+      [
+        "SUPER, T, exec, $terminal"
+        "SUPER, Q, killactive,"
+        "SUPER, SHIFT ALT Q, forcekillactive,"
+        "SUPER, M, exec, uwsm stop"
+        "SUPER, E, exec, $fileManager"
+        "SUPER, F, togglefloating,"
+        "SUPER, G, fullscreen,"
+        "SUPER, SPACE, exec, $menu"
+        "SUPER, P, pseudo," # dwindle
+        "SUPER, J, togglesplit," # dwindle
 
-      # clipboard 
-      "$mainMod, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
+        # clipboard
+        "SUPER, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
 
-      # screenshot
-      "$mainMod, PRINT, exec, hyprshot -m window"
-      ", PRINT, exec, hyprshot -m output"
-      "$mainMod SHIFT, PRINT, exec, hyprshot -m region"
+        # screenshot
+        "SUPER, PRINT, exec, hyprshot -m window"
+        ", PRINT, exec, hyprshot -m output"
+        "SUPER SHIFT, PRINT, exec, hyprshot -m region"
 
-      # lock
-      # "$mainMod, L, exec, hyprlock"
+        # lock
+        # "SUPER, L, exec, hyprlock"
 
-      # Move focus with mainMod + arrow keys
-      "$mainMod, left, movefocus, l"
-      "$mainMod, right, movefocus, r"
-      "$mainMod, up, movefocus, u"
-      "$mainMod, down, movefocus, d"
+        # Move focus with mainMod + arrow keys
+        "SUPER, left, movefocus, l"
+        "SUPER, right, movefocus, r"
+        "SUPER, up, movefocus, u"
+        "SUPER, down, movefocus, d"
 
-      # Switch workspaces with mainMod + [0-9]
-      "$mainMod, 1, workspace, 1"
-      "$mainMod, 2, workspace, 2"
-      "$mainMod, 3, workspace, 3"
-      "$mainMod, 4, workspace, 4"
-      "$mainMod, 5, workspace, 5"
-      "$mainMod, 6, workspace, 6"
-      "$mainMod, 7, workspace, 7"
-      "$mainMod, 8, workspace, 8"
-      "$mainMod, 9, workspace, 9"
-      "$mainMod, 0, workspace, 10"
+        # Example special workspace (scratchpad)
+        "SUPER, S, togglespecialworkspace, magic"
+        "SUPER SHIFT, S, movetoworkspace, special:magic"
 
-      # Move active window to a workspace with mainMod + SHIFT + [0-9]
-      "$mainMod SHIFT, 1, movetoworkspace, 1"
-      "$mainMod SHIFT, 2, movetoworkspace, 2"
-      "$mainMod SHIFT, 3, movetoworkspace, 3"
-      "$mainMod SHIFT, 4, movetoworkspace, 4"
-      "$mainMod SHIFT, 5, movetoworkspace, 5"
-      "$mainMod SHIFT, 6, movetoworkspace, 6"
-      "$mainMod SHIFT, 7, movetoworkspace, 7"
-      "$mainMod SHIFT, 8, movetoworkspace, 8"
-      "$mainMod SHIFT, 9, movetoworkspace, 9"
-      "$mainMod SHIFT, 0, movetoworkspace, 10"
+        # Scroll through existing workspaces with mainMod + scroll
+        "SUPER, mouse_down, workspace, e+1"
+        "SUPER, mouse_up, workspace, e-1"
 
-      # Example special workspace (scratchpad)
-      "$mainMod, S, togglespecialworkspace, magic"
-      "$mainMod SHIFT, S, movetoworkspace, special:magic"
+        "SUPER CTRL, left, workspace, m-1"
+        "SUPER CTRL, right, workspace, m+1"
+      ]
+      ++ (
+        with builtins;
+        let
+          mod = x: y: x - (x / y) * y;
+          keys = genList (x: if x < 10 then toString (mod (x + 1) 10) else "F" + toString (x - 9)) 20;
+          workspaces = genList (x: toString (x + 1)) 20;
+          altWorkspaces = genList (x: toString (x + 31)) 20;
 
-      # Scroll through existing workspaces with mainMod + scroll
-      "$mainMod, mouse_down, workspace, e+1"
-      "$mainMod, mouse_up, workspace, e-1"
-    ];
+          mkBinding =
+            mod: key: ws:
+            "${mod}, ${key}, workspace, ${ws}";
+          mkMoveBinding =
+            mod: key: ws:
+            "${mod}, ${key}, movetoworkspace, ${ws}";
+
+          # Switch workspaces with SUPER (ALT)?, [1-9]|F[1-10]
+          bindings =
+            genList (i: mkBinding "SUPER" (elemAt keys i) (elemAt workspaces i)) 20
+            ++ genList (i: mkBinding "SUPER ALT" (elemAt keys i) (elemAt altWorkspaces i)) 20;
+
+          # Move active window to a workspace with SUPER (ALT)?, [1-9]|F[1-10]
+          moveBindings =
+            genList (i: mkMoveBinding "SUPER SHIFT" (elemAt keys i) (elemAt workspaces i)) 20
+            ++ genList (i: mkMoveBinding "SUPER SHIFT ALT" (elemAt keys i) (elemAt altWorkspaces i)) 20;
+
+        in
+        bindings ++ moveBindings
+      );
 
     bindm = [
       # Move/resize windows with mainMod + LMB/RMB and dragging
-      "$mainMod, mouse:272, movewindow"
-      "$mainMod, mouse:273, resizewindow"
+      "SUPER, mouse:272, movewindow"
+      "SUPER, mouse:273, resizewindow"
     ];
 
     bindel = [

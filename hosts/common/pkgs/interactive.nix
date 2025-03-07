@@ -37,8 +37,10 @@ base-pkgs
 
   polkit
 
-  mullvad-vpn
-  mullvad
+  pwvucontrol
+
+  # mullvad-vpn
+  # mullvad
 
   hyprland
   kitty

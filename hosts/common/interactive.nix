@@ -12,8 +12,8 @@
   ];
 
   services.resolved.enable = true;
-  services.mullvad-vpn.enable = true;
-  services.mullvad-vpn.package = pkgs.mullvad-vpn;
+  # services.mullvad-vpn.enable = true;
+  # services.mullvad-vpn.package = pkgs.mullvad-vpn;
 
   # SECURITY: this is fine for single user, personal systems.
   nix.settings.trusted-users = [
@@ -130,6 +130,8 @@
         fira-code
         fira-code-symbols
         nerd-fonts.fira-code
+        font-awesome
+        source-code-pro
         lato
         open-sans
         # twemoji-colr

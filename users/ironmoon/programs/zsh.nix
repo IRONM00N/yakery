@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}:
+{ config, ... }:
 {
   enable = true;
   enableCompletion = true;
@@ -16,6 +12,8 @@
     nixos-rebuild = "sudo nixos-rebuild switch";
     edit = "code --wait --new-window --disable-workspace-trust";
     diff = "diff -u";
+    grep = "rg";
+    vim = "nvim";
   };
   history = {
     size = 100000;

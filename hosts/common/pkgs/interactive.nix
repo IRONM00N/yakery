@@ -39,6 +39,9 @@ base-pkgs
 
   pwvucontrol
 
+  kdePackages.qtwayland
+  kdePackages.qtsvg
+
   # mullvad-vpn
   # mullvad
 

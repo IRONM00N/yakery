@@ -7,6 +7,7 @@ with pkgs;
   busybox
   binutils
   git
+  delta
   gnumake
   htop
   gnupg

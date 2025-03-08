@@ -53,7 +53,7 @@
 }
 
 #workspaces button:hover {
-	background: #3b3e47 /*  */;
+	background: #3b3e47 /* base02 */;
 }
 
 #workspaces button.visible,
@@ -127,3 +127,10 @@
 	font-family: sans-serif;
 }
 
+#battery.warning {
+	color: #dc9656 /* base09 */;
+}
+
+#battery.critical {
+	color: #ab4642 /* base08 */;
+}

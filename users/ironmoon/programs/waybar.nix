@@ -20,6 +20,11 @@ in
 {
   enable = true;
 
+  systemd = {
+    enable = true;
+    target = "wayland-session@Hyprland.target";
+  };
+
   settings = {
     mainBar = {
       "layer" = "top";
@@ -63,6 +68,8 @@ in
       "hyprland/window" = {
         "separate-outputs" = true;
         "max-length" = 150;
+        "icon" = true;
+        "icon-size" = 16;
       };
 
       # -----------------
@@ -220,9 +227,8 @@ in
       };
 
     };
+
   };
 
   style = builtins.readFile ../resources/waybar.css;
-
-  systemd.enable = false;
 }

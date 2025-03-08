@@ -8,12 +8,10 @@
   settings = {
 
     "$terminal" = "kitty";
-    "$fileManager" = "dolphin";
+    "$fileManager" = "XDG_MENU_PREFIX=plasma- dolphin";
     "$menu" = "wofi --show drun";
 
     exec-once = [
-      "nm-applet --indicator &"
-      "killall waybar; waybar &"
       "wl-paste --type text --watch cliphist store"
       "wl-paste --type image --watch cliphist store"
     ];
@@ -168,12 +166,16 @@
     ];
 
     windowrulev2 = [
-      # Ignore maximize requests from apps. You'll probably like this.
+      # Ignore maximize requests from apps.
       "suppressevent maximize, class:.*"
       # Fix some dragging issues with XWayland
       "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
 
-      # todo: make xdg-portals float
+      "opacity 0, class:xwaylandvideobridge"
+      "noanim, class:xwaylandvideobridge"
+      "workspace special silent, class:xwaylandvideobridge"
+
+      # TODO: make xdg-portals float
     ];
   };
 }

@@ -58,6 +58,7 @@ in
     dunst = importMod ./services/dunst.nix;
     hypridle = importMod ./services/hypridle.nix;
   };
+  imports = [ ./services/network-manager-applet.nix ];
 
   programs.plasma = importMod ./env/plasma.nix;
   wayland.windowManager.hyprland = importMod ./env/hyprland.nix;

@@ -71,7 +71,7 @@
 
       google-chrome
       # firefox enabled with home-manager
-      firefox-devedition
+      firefox-devedition-bin # devedition keeps updating and is slow
 
       texlive.combined.scheme-full
 

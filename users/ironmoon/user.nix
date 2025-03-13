@@ -68,12 +68,7 @@
       home-manager
 
       networkmanagerapplet
-
-      google-chrome
-      # firefox enabled with home-manager
-      firefox-devedition-bin # devedition keeps updating and is slow
-
-      texlive.combined.scheme-full
+      nwg-displays
 
       kdePackages.plasma-desktop
       kdePackages.kate
@@ -85,8 +80,15 @@
       kdePackages.kalarm
       kdePackages.kweather
       kdePackages.kwallet-pam
-      libsForQt5.kde-cli-tools
       kdePackages.plasma-firewall
+      libsForQt5.kde-cli-tools
+
+      google-chrome
+      # firefox enabled with home-manager
+      firefox-devedition-bin # devedition keeps updating and is slow
+      tor-browser-bundle-bin
+      element-desktop
+      ladybird
 
       thunderbird
       libreoffice-qt
@@ -100,15 +102,25 @@
       vlc
       audacity
       zoom-us
-      ocaml
-      ocamlPackages.utop
       pkg-config
       obsidian
       krita
       aseprite
-      nixfmt-rfc-style
 
-      tor-browser-bundle-bin
+      # https://github.com/ibraheemdev/modern-unix
+      lazygit
+      mcfly
+      fzf
+      broot
+      duf
+      dust
+      bat
+      bottom
+      procs
+      doggo
+      glances
+      gtop
+      jq
 
       (discord.override {
         withVencord = true;
@@ -122,22 +134,29 @@
         withMiddleClickScroll = true;
         withTTS = true;
       })
-      spotify
-
-      racket
-      nil
-      # (minecraft.overrideAttrs (oldAttrs: {
-      #   meta = oldAttrs.meta // {
-      #     broken = false;
-      #   };
-      # }))
-      prismlauncher
       slack
+      spotify
 
       (python3.withPackages (used-python-pkgs))
       # yarn-berry
       nodejs_22
       corepack_22
+      pm2
+      ocaml
+      ocamlPackages.utop
+      dune_3
+      opam
+      ghc
+      racket
+      nil
+      nixfmt-rfc-style
+      texlive.combined.scheme-full
+      arduino-ide
+      direnv
+      nix-direnv
+      treefmt
+
+      pandoc
 
       (wordlists.override {
         lists = with pkgs; [
@@ -148,6 +167,7 @@
 
       postman
       ghidra
+      burpsuite
 
       jetbrains.idea-ultimate
       jetbrains.datagrip
@@ -158,16 +178,7 @@
       qbittorrent
 
       frp # fast reverse proxy
-
-      jq
-      pm2
-      dune_3
-      opam
       ripgrep-all
-
-      arduino-ide
-
-      element-desktop
 
       (fontforge.override {
         withGUI = true;
@@ -177,17 +188,14 @@
         unrarSupport = true; # .cbr, .cbz
       })
       epubcheck
-      direnv
-      nix-direnv
-      treefmt
 
+      # (minecraft.overrideAttrs (oldAttrs: {
+      #   meta = oldAttrs.meta // {
+      #     broken = false;
+      #   };
+      # }))
+      prismlauncher
       minecraft-server
-      ghc
-
-      ladybird
-
-      burpsuite
-      pandoc
     ]
     ++ additional-pkgs;
 }

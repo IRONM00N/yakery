@@ -1,4 +1,41 @@
 { ... }:
+let
+  workspaceBinding =
+    with builtins;
+    let
+      mod = x: y: x - (x / y) * y;
+      keys = genList (x: if x < 10 then toString (mod (x + 1) 10) else "F" + toString (x - 9)) 20;
+      workspaces = genList (x: toString (x + 1)) 20;
+      altWorkspaces = genList (x: toString (x + 31)) 20;
+
+      mkBinding =
+        mod: key: ws:
+        "${mod}, ${key}, workspace, ${ws}";
+      mkMoveBinding =
+        mod: key: ws:
+        "${mod}, ${key}, movetoworkspace, ${ws}";
+
+      # Switch workspaces with SUPER (ALT)?, [1-9]|F[1-10]
+      bindings =
+        genList (i: mkBinding "SUPER" (elemAt keys i) (elemAt workspaces i)) 20
+        ++ genList (i: mkBinding "SUPER ALT" (elemAt keys i) (elemAt altWorkspaces i)) 20;
+
+      # Move active window to a workspace with SUPER (ALT)?, [1-9]|F[1-10]
+      moveBindings =
+        genList (i: mkMoveBinding "SUPER SHIFT" (elemAt keys i) (elemAt workspaces i)) 20
+        ++ genList (i: mkMoveBinding "SUPER SHIFT ALT" (elemAt keys i) (elemAt altWorkspaces i)) 20;
+    in
+    bindings ++ moveBindings;
+
+  terminal = "kitty";
+  fileManager = "XDG_MENU_PREFIX=plasma- dolphin";
+  menu = "wofi --show drun";
+  clipboardHist = "cliphist list | wofi --dmenu | cliphist decode | wl-copy";
+  ssWindow = "hyprshot -m window";
+  ssMonitor = "hyprshot -m output";
+  ssSelection = "hyprshot -m region -z";
+  colorPick = "hyprpicker -a -n -q";
+in
 {
   enable = true;
 
@@ -6,17 +43,12 @@
   systemd.enable = false;
 
   settings = {
-
-    "$terminal" = "kitty";
-    "$fileManager" = "XDG_MENU_PREFIX=plasma- dolphin";
-    "$menu" = "wofi --show drun";
+    source = "~/.config/hypr/monitors.conf";
 
     exec-once = [
       "wl-paste --type text --watch cliphist store"
       "wl-paste --type image --watch cliphist store"
     ];
-
-    monitor = ",preferred,auto,1";
 
     env = [
       "XCURSOR_SIZE,24"
@@ -63,7 +95,7 @@
       force_default_wallpaper = 0;
       disable_splash_rendering = true;
       focus_on_activate = true;
-      disable_autoreload = true;
+      # disable_autoreload = true;
     };
 
     gestures = {
@@ -71,75 +103,51 @@
     };
 
     # https://wiki.hyprland.org/Configuring/Binds/
-    bind =
-      [
-        "SUPER, T, exec, $terminal"
-        "SUPER, Q, killactive,"
-        "SUPER, SHIFT ALT Q, forcekillactive,"
-        "SUPER, M, exec, uwsm stop"
-        "SUPER, E, exec, $fileManager"
-        "SUPER, F, togglefloating,"
-        "SUPER, G, fullscreen,"
-        "SUPER, SPACE, exec, $menu"
-        "SUPER, P, pseudo," # dwindle
-        "SUPER, J, togglesplit," # dwindle
+    bind = [
+      "SUPER, T, exec, ${terminal}"
+      "SUPER, Q, killactive,"
+      "SUPER, SHIFT ALT Q, forcekillactive,"
+      "SUPER, Escape, exec, uwsm stop"
+      "SUPER, E, exec, ${fileManager}"
+      "SUPER, F, togglefloating,"
+      "SUPER, G, fullscreen,"
+      "SUPER, SPACE, exec, ${menu}"
+      "SUPER, P, pseudo," # dwindle
+      "SUPER, J, togglesplit," # dwindle
 
-        # clipboard
-        "SUPER, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
+      # clipboard
+      "SUPER, V, exec, ${clipboardHist}"
 
-        # screenshot
-        "SUPER, PRINT, exec, hyprshot -m window"
-        ", PRINT, exec, hyprshot -m output"
-        "SUPER SHIFT, PRINT, exec, hyprshot -m region"
+      # screenshot
+      "SUPER, PRINT, exec, ${ssWindow}"
+      ", PRINT, exec, ${ssMonitor}"
+      "SUPER SHIFT, PRINT, exec, ${ssSelection}"
+      "SUPER SHIFT, s, exec, ${ssSelection}"
 
-        # lock
-        # "SUPER, L, exec, hyprlock"
+      # color picker
+      "SUPER SHIFT, c, exec, ${colorPick}"
 
-        # Move focus with mainMod + arrow keys
-        "SUPER, left, movefocus, l"
-        "SUPER, right, movefocus, r"
-        "SUPER, up, movefocus, u"
-        "SUPER, down, movefocus, d"
 
-        # Example special workspace (scratchpad)
-        "SUPER, S, togglespecialworkspace, magic"
-        "SUPER SHIFT, S, movetoworkspace, special:magic"
+      # lock
+      # "SUPER, L, exec, hyprlock"
 
-        # Scroll through existing workspaces with mainMod + scroll
-        "SUPER, mouse_down, workspace, e+1"
-        "SUPER, mouse_up, workspace, e-1"
+      # Move focus with mainMod + arrow keys
+      "SUPER, left, movefocus, l"
+      "SUPER, right, movefocus, r"
+      "SUPER, up, movefocus, u"
+      "SUPER, down, movefocus, d"
 
-        "SUPER CTRL, left, workspace, m-1"
-        "SUPER CTRL, right, workspace, m+1"
-      ]
-      ++ (
-        with builtins;
-        let
-          mod = x: y: x - (x / y) * y;
-          keys = genList (x: if x < 10 then toString (mod (x + 1) 10) else "F" + toString (x - 9)) 20;
-          workspaces = genList (x: toString (x + 1)) 20;
-          altWorkspaces = genList (x: toString (x + 31)) 20;
+      # Example special workspace (scratchpad)
+      "SUPER, grave, togglespecialworkspace, magic"
+      "SUPER SHIFT, grave, movetoworkspace, special:magic"
 
-          mkBinding =
-            mod: key: ws:
-            "${mod}, ${key}, workspace, ${ws}";
-          mkMoveBinding =
-            mod: key: ws:
-            "${mod}, ${key}, movetoworkspace, ${ws}";
+      # Scroll through existing workspaces with mainMod + scroll
+      "SUPER, mouse_down, workspace, e+1"
+      "SUPER, mouse_up, workspace, e-1"
 
-          # Switch workspaces with SUPER (ALT)?, [1-9]|F[1-10]
-          bindings =
-            genList (i: mkBinding "SUPER" (elemAt keys i) (elemAt workspaces i)) 20
-            ++ genList (i: mkBinding "SUPER ALT" (elemAt keys i) (elemAt altWorkspaces i)) 20;
-
-          # Move active window to a workspace with SUPER (ALT)?, [1-9]|F[1-10]
-          moveBindings =
-            genList (i: mkMoveBinding "SUPER SHIFT" (elemAt keys i) (elemAt workspaces i)) 20
-            ++ genList (i: mkMoveBinding "SUPER SHIFT ALT" (elemAt keys i) (elemAt altWorkspaces i)) 20;
-
-        in
-        bindings ++ moveBindings
-      );
+      "SUPER CTRL, left, workspace, m-1"
+      "SUPER CTRL, right, workspace, m+1"
+    ] ++ workspaceBinding;
 
     bindm = [
       # Move/resize windows with mainMod + LMB/RMB and dragging
@@ -153,8 +161,8 @@
       ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-      ",XF86MonBrightnessUp, exec, brightnessctl s 10%+"
-      ",XF86MonBrightnessDown, exec, brightnessctl s 10%-"
+      ",XF86MonBrightnessUp, exec, brightnessctl s 5%+"
+      ",XF86MonBrightnessDown, exec, brightnessctl s 5%-"
     ];
 
     bindl = [

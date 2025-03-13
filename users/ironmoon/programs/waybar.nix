@@ -194,6 +194,8 @@ in
           "critical" = 15;
         };
         "format" = "{capacity}% {icon}";
+        "format-warning" = "{capacity}% <span color='${base09}'>{icon}</span>";
+        "format-critical" = "{capacity}% <span color='${base08}'>{icon}</span>";
         "format-plugged" = "{capacity}% ";
         "tooltip" = true;
         "tooltip-format" = "{timeTo}\nCycles: {cycles}\nHealth: {health}%\nPower: {power}W";
@@ -225,9 +227,7 @@ in
           ];
         };
       };
-
     };
-
   };
 
   style = builtins.readFile ../resources/waybar.css;

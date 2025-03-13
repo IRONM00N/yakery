@@ -126,11 +126,3 @@
 	min-width: 25px;
 	font-family: sans-serif;
 }
-
-#battery.warning {
-	color: #dc9656 /* base09 */;
-}
-
-#battery.critical {
-	color: #ab4642 /* base08 */;
-}

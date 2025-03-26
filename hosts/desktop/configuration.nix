@@ -8,6 +8,7 @@
   pkgs,
   pkgs-stable,
   info,
+  system,
   ...
 }:
 let
@@ -23,8 +24,9 @@ in
         config
         pkgs
         pkgs-stable
-        additional-user-pkgs
         info
+        additional-user-pkgs
+        system
         ;
     })
   ];

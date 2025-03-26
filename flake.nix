@@ -18,6 +18,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    anyrun = {
+      url = "github:anyrun-org/anyrun";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -69,16 +73,16 @@
         nixConfig
         home-manager.nixosModules.home-manager
       ];
+      system = "x86_64-linux";
       base-system = sa: rec {
-        system = "x86_64-linux";
+        inherit system;
         specialArgs = (
           {
-            inherit inputs;
+            inherit inputs system;
             pkgs-stable = import nixpkgs-stable {
               inherit system;
               config = base-config;
             };
-
           }
           // sa
         );
@@ -118,7 +122,7 @@
       homeConfigurations = {
         "ironmoon" = home-manager.lib.homeManagerConfiguration {
           # todo make this nicer
-          pkgs = import nixpkgs { system = "x86_64-linux"; };
+          pkgs = import nixpkgs { inherit system; };
           extraSpecialArgs = { inherit inputs; };
           modules = [
             {

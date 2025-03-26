@@ -8,9 +8,11 @@
   pkgs,
   pkgs-stable,
   info,
+  system,
   ...
 }:
 let
+  additional-user-pkgs = import ./additional-user-pkgs.nix { inherit pkgs info; };
   interactive-pkgs = import ../common/pkgs/interactive.nix { inherit pkgs info; };
 in
 {
@@ -23,8 +25,9 @@ in
         pkgs
         pkgs-stable
         info
+        additional-user-pkgs
+        system
         ;
-      additional-user-pkgs = [ ];
     })
   ];
 

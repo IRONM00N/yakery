@@ -29,7 +29,7 @@ let
 
   terminal = "kitty";
   fileManager = "dolphin";
-  menu = "wofi --show drun";
+  menu = "anyrun";
   clipboardHist = "cliphist list | wofi --dmenu | cliphist decode | wl-copy";
   ssWindow = "hyprshot -m window";
   ssMonitor = "hyprshot -m output";
@@ -194,6 +194,11 @@ in
       "workspace special silent, class:xwaylandvideobridge"
 
       # TODO: make xdg-portals float
+    ];
+
+    layerrule = [
+      "blur, (anyrun)"
+      "ignorezero, (anyrun)"
     ];
   };
 }

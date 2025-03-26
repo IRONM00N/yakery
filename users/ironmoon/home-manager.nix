@@ -118,6 +118,7 @@ in
     waybar = importMod ./programs/waybar.nix;
     hyprlock = importMod ./programs/hyprlock.nix;
     kitty = importMod ./programs/kitty.nix;
+    anyrun = importMod ./programs/anyrun.nix;
   };
 
   services = {

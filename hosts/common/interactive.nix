@@ -5,6 +5,7 @@
   pkgs-stable,
   additional-user-pkgs,
   info,
+  system,
   ...
 }:
 {
@@ -181,6 +182,7 @@
       pkgs
       pkgs-stable
       info
+      system
       ;
     additional-pkgs = additional-user-pkgs;
   };
@@ -189,8 +191,11 @@
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
-    sharedModules = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
-    extraSpecialArgs = { inherit info pkgs-stable; };
+    sharedModules = [
+      inputs.plasma-manager.homeManagerModules.plasma-manager
+      inputs.anyrun.homeManagerModules.default
+    ];
+    extraSpecialArgs = { inherit info pkgs-stable inputs; };
     users.ironmoon = import ../../users/ironmoon/home-manager.nix;
   };
 

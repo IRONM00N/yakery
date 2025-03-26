@@ -8,6 +8,8 @@
 
   shellAliases = {
     ll = "ls -l";
+    la = "ls -lAh";
+    l = "ls -lah";
     nixos-update = "nix flake update --flake /etc/nixos";
     nixos-rebuild = "sudo nixos-rebuild switch";
     edit = "code --wait --new-window --disable-workspace-trust";

@@ -70,7 +70,10 @@ in
     ++ (with pkgs; [
       fprintd
       # man-pages-posix
+      powertop
     ]);
+
+  services.cpupower-gui.enable = true;
 
   # WARNING nix-ld: this should only be used for hacky situations such as CTFs
   # otherwise this negates the benefits of nix
@@ -113,6 +116,14 @@ in
   # fingerprint reader support
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = false; # waits for fingerprint otherwise
+
+  # battery stuff
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+  };
+
+  boot.kernelModules = [ "cpufreq_stats" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

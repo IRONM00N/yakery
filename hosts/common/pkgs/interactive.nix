@@ -27,6 +27,7 @@ base-pkgs
   os-prober
 
   gef
+  # pwndbg
 
   emacs-gtk
   helix

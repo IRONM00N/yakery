@@ -60,7 +60,9 @@
 
           setuptools
 
-          # jd-gui
+          pwntools
+
+          # jd-gui # removed
         ];
     in
     [
@@ -168,6 +170,7 @@
       postman
       ghidra
       burpsuite
+      metasploit
 
       jetbrains.idea-ultimate
       jetbrains.datagrip
@@ -196,6 +199,9 @@
       # }))
       prismlauncher
       minecraft-server
+
+      bytecode-viewer
+      jdk
     ]
     ++ additional-pkgs;
 }

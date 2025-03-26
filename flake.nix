@@ -14,8 +14,10 @@
       inputs.home-manager.follows = "home-manager";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {

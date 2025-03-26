@@ -28,7 +28,7 @@ let
     bindings ++ moveBindings;
 
   terminal = "kitty";
-  fileManager = "XDG_MENU_PREFIX=plasma- dolphin";
+  fileManager = "dolphin";
   menu = "wofi --show drun";
   clipboardHist = "cliphist list | wofi --dmenu | cliphist decode | wl-copy";
   ssWindow = "hyprshot -m window";
@@ -55,6 +55,7 @@ in
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
         "NIXOS_OZONE_WL,1"
+        "XDG_MENU_PREFIX,plasma-"
       ]
       ++ pkgs.lib.optionals info.nvidia [
         "LIBVA_DRIVER_NAME,nvidia"

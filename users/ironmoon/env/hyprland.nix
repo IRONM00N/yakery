@@ -1,4 +1,4 @@
-{ ... }:
+{ info, pkgs, ... }:
 let
   workspaceBinding =
     with builtins;
@@ -50,10 +50,16 @@ in
       "wl-paste --type image --watch cliphist store"
     ];
 
-    env = [
-      "XCURSOR_SIZE,24"
-      "HYPRCURSOR_SIZE,24"
-    ];
+    env =
+      [
+        "XCURSOR_SIZE,24"
+        "HYPRCURSOR_SIZE,24"
+        "NIXOS_OZONE_WL,1"
+      ]
+      ++ pkgs.lib.optionals info.nvidia [
+        "LIBVA_DRIVER_NAME,nvidia"
+        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+      ];
 
     general = {
       gaps_in = 0;
@@ -102,6 +108,8 @@ in
       workspace_swipe = true;
     };
 
+    render.explicit_sync = pkgs.lib.mkIf info.nvidia 0;
+
     # https://wiki.hyprland.org/Configuring/Binds/
     bind = [
       "SUPER, T, exec, ${terminal}"
@@ -127,7 +135,6 @@ in
       # color picker
       "SUPER SHIFT, c, exec, ${colorPick}"
 
-
       # lock
       # "SUPER, L, exec, hyprlock"
 
@@ -147,6 +154,8 @@ in
 
       "SUPER CTRL, left, workspace, m-1"
       "SUPER CTRL, right, workspace, m+1"
+      "SUPER CTRL ALT, left, workspace, r-1"
+      "SUPER CTRL ALT, right, workspace, r+1"
     ] ++ workspaceBinding;
 
     bindm = [

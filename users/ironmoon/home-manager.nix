@@ -2,10 +2,20 @@
   inputs,
   config,
   pkgs,
+  info,
   ...
 }:
 let
-  importMod = path: import path { inherit inputs config pkgs; };
+  importMod =
+    path:
+    import path {
+      inherit
+        inputs
+        config
+        pkgs
+        info
+        ;
+    };
 in
 {
   home.file.".p10k.zsh".source = ./resources/.p10k.zsh;

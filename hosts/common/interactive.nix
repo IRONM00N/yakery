@@ -4,6 +4,7 @@
   pkgs,
   pkgs-stable,
   additional-user-pkgs,
+  info,
   ...
 }:
 {
@@ -174,9 +175,13 @@
   # user account.
   # set a password with `passwd`
   users.users.ironmoon = import ../../users/ironmoon/user.nix {
-    config = config;
-    pkgs = pkgs;
-    pkgs-stable = pkgs-stable;
+    inherit
+      inputs
+      config
+      pkgs
+      pkgs-stable
+      info
+      ;
     additional-pkgs = additional-user-pkgs;
   };
 
@@ -185,6 +190,7 @@
     useUserPackages = true;
     useGlobalPkgs = true;
     sharedModules = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
+    extraSpecialArgs = { inherit info pkgs-stable; };
     users.ironmoon = import ../../users/ironmoon/home-manager.nix;
   };
 
@@ -212,4 +218,21 @@
   # generate man pages
   # documentation.dev.enable = true;
   # documentation.man.generateCaches = true;
+
+  # ----------------------------- nvidia bullshit -----------------------------
+  # Enable OpenGL
+  hardware.graphics = pkgs.lib.mkIf info.nvidia {
+    enable = true;
+  };
+  hardware.nvidia = pkgs.lib.mkIf info.nvidia {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    # these are not yet ready:
+    open = true;
+    nvidiaSettings = true; # nvidia-settings
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+  # Load nvidia driver for Xorg and Wayland
+  services.xserver.videoDrivers = pkgs.lib.mkIf info.nvidia [ "nvidia" ];
 }

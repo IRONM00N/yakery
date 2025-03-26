@@ -7,10 +7,11 @@
   config,
   pkgs,
   pkgs-stable,
+  info,
   ...
 }:
 let
-  interactive-pkgs = import ../common/pkgs/interactive.nix { inherit pkgs; };
+  interactive-pkgs = import ../common/pkgs/interactive.nix { inherit pkgs info; };
 in
 {
   imports = [
@@ -21,6 +22,7 @@ in
         config
         pkgs
         pkgs-stable
+        info
         ;
       additional-user-pkgs = [ ];
     })

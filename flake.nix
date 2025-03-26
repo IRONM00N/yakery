@@ -67,21 +67,30 @@
         nixConfig
         home-manager.nixosModules.home-manager
       ];
-      base-system = rec {
+      base-system = sa: rec {
         system = "x86_64-linux";
-        specialArgs = {
-          inputs = inputs;
-          pkgs-stable = import nixpkgs-stable {
-            inherit system;
-            config = base-config;
-          };
-        };
+        specialArgs = (
+          {
+            inherit inputs;
+            pkgs-stable = import nixpkgs-stable {
+              inherit system;
+              config = base-config;
+            };
+
+          }
+          // sa
+        );
       };
     in
     {
       nixosConfigurations = {
         framework = nixpkgs.lib.nixosSystem (
-          base-system
+          (base-system {
+            info = {
+              laptop = true;
+              nvidia = false;
+            };
+          })
           // {
             modules = base-modules ++ [
               nixos-hardware.nixosModules.framework-13-7040-amd
@@ -90,7 +99,12 @@
           }
         );
         desktop = nixpkgs.lib.nixosSystem (
-          base-system
+          (base-system {
+            info = {
+              laptop = false;
+              nvidia = true;
+            };
+          })
           // {
             modules = base-modules ++ [
               ./hosts/desktop/configuration.nix

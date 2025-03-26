@@ -7,11 +7,12 @@
   config,
   pkgs,
   pkgs-stable,
+  info,
   ...
 }:
 let
-  additional-user-pkgs = import ./additional-user-pkgs.nix { inherit pkgs; };
-  interactive-pkgs = import ../common/pkgs/interactive.nix { inherit pkgs; };
+  additional-user-pkgs = import ./additional-user-pkgs.nix { inherit pkgs info; };
+  interactive-pkgs = import ../common/pkgs/interactive.nix { inherit pkgs info; };
 in
 {
   imports = [
@@ -23,10 +24,10 @@ in
         pkgs
         pkgs-stable
         additional-user-pkgs
+        info
         ;
     })
   ];
-
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -77,14 +78,14 @@ in
     }
   ];
 
-  services.pulseaudio.enable = true;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = false;
-    alsa.enable = false;
-    alsa.support32Bit = false;
-    pulse.enable = false;
-  };
+  # services.pulseaudio.enable = true;
+  # security.rtkit.enable = true;
+  # services.pipewire = {
+  #   enable = false;
+  #   alsa.enable = false;
+  #   alsa.support32Bit = false;
+  #   pulse.enable = false;
+  # };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

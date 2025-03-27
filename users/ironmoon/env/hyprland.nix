@@ -121,6 +121,7 @@ in
       "SUPER, F, togglefloating,"
       "SUPER, G, fullscreen,"
       "SUPER, SPACE, exec, ${menu}"
+      "ALT`, SPACE, exec, ${menu}"
       "SUPER, P, pseudo," # dwindle
       "SUPER, J, togglesplit," # dwindle
 

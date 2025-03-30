@@ -18,13 +18,14 @@
     ignoreExclusiveZones = false;
     layer = "top";
     hidePluginInfo = false;
-    closeOnClick = false;
+    closeOnClick = true;
     showResultsImmediately = false;
     maxEntries = null;
 
-    plugins = [
-      inputs.anyrun.packages.${pkgs.system}.applications
-      inputs.anyrun.packages.${pkgs.system}.rink
+    plugins = with inputs.anyrun.packages.${pkgs.system}; [
+      applications
+      rink
+      dictionary
     ];
   };
 
@@ -37,11 +38,12 @@
       }
     '';
 
-  extraConfigFiles."some-plugin.ron".text = ''
-    Config(
-      // for any other plugin
-      // this file will be put in ~/.config/anyrun/some-plugin.ron
-      // refer to docs of xdg.configFile for available options
-    )
-  '';
+  extraConfigFiles = {
+    "dictionary.ron".text = ''
+      Config(
+        prefix: ":def",
+        max_entries: 5,
+      )
+    '';
+  };
 }

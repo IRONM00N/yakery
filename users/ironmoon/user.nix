@@ -171,6 +171,7 @@
       ghidra
       burpsuite
       metasploit
+      ida-free
 
       jetbrains.idea-ultimate
       jetbrains.datagrip

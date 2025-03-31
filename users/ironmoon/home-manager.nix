@@ -124,6 +124,7 @@ in
   services = {
     dunst = importMod ./services/dunst.nix;
     hypridle = importMod ./services/hypridle.nix;
+    hyprpaper = importMod ./services/hyprpaper.nix;
   };
   imports = [ ./services/network-manager-applet.nix ];
 

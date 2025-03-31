@@ -95,6 +95,7 @@
             info = {
               laptop = true;
               nvidia = false;
+              fingerprint = true;
             };
           })
           // {
@@ -109,6 +110,7 @@
             info = {
               laptop = false;
               nvidia = true;
+              fingerprint = false;
             };
           })
           // {

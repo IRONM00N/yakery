@@ -138,7 +138,7 @@ in
       "SUPER SHIFT, c, exec, ${colorPick}"
 
       # lock
-      # "SUPER, L, exec, hyprlock"
+      "SUPER, L, exec, loginctl lock-session"
 
       # Move focus with mainMod + arrow keys
       "SUPER, left, movefocus, l"

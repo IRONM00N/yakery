@@ -203,6 +203,7 @@
 
       bytecode-viewer
       jdk
+      avogadro2
     ]
     ++ additional-pkgs;
 }

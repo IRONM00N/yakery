@@ -96,6 +96,7 @@
               laptop = true;
               nvidia = false;
               fingerprint = true;
+              id = "framework-13-7040-amd";
             };
           })
           // {
@@ -111,6 +112,7 @@
               laptop = false;
               nvidia = true;
               fingerprint = false;
+              id = "desktop-2070super"; # get better id
             };
           })
           // {

@@ -180,6 +180,8 @@
       jetbrains.pycharm-professional
       jetbrains.clion
 
+      code-cursor
+
       qbittorrent
 
       frp # fast reverse proxy

@@ -205,6 +205,7 @@
       bytecode-viewer
       jdk
       avogadro2
+      openbabel
     ]
     ++ additional-pkgs;
 }

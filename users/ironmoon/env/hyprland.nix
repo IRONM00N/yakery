@@ -194,6 +194,8 @@ in
       "noanim, class:xwaylandvideobridge"
       "workspace special silent, class:xwaylandvideobridge"
 
+      "float,title:^(Orbital)$"
+
       # TODO: make xdg-portals float
     ];
 

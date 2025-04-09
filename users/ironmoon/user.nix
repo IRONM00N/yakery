@@ -93,6 +93,7 @@
       ladybird
 
       thunderbird
+      birdtray
       libreoffice-qt
       hunspell
       hunspellDicts.en_US

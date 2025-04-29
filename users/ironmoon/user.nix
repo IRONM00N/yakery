@@ -138,6 +138,8 @@
         withTTS = true;
       })
       slack
+      signal-desktop
+
       spotify
 
       (python3.withPackages (used-python-pkgs))

@@ -210,6 +210,8 @@
 
       bytecode-viewer
       jdk
+      jdk11
+      jdk17
       avogadro2
       openbabel
     ]

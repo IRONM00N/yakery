@@ -195,9 +195,9 @@
         withGUI = true;
       })
 
-      # (calibre.override {
-      #   unrarSupport = true; # .cbr, .cbz
-      # })
+      (calibre.override {
+        unrarSupport = true; # .cbr, .cbz
+      })
       epubcheck
 
       # (minecraft.overrideAttrs (oldAttrs: {

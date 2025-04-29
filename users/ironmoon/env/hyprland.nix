@@ -46,8 +46,8 @@ in
     source = "~/.config/hypr/monitors.conf";
 
     exec-once = [
-      "wl-paste --type text --watch cliphist store"
-      "wl-paste --type image --watch cliphist store"
+      "wl-paste --type text --watch cliphist -max-items 100000 store"
+      "wl-paste --type image --watch cliphist -max-items 100000 store"
     ];
 
     env =

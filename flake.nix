@@ -22,6 +22,10 @@
       url = "github:anyrun-org/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    binary-ninja = {
+      url = "github:jchv/nix-binary-ninja";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -48,6 +52,7 @@
       plasma-manager,
       nixos-hardware,
       treefmt-nix,
+      binary-ninja,
       systems,
       ...
     }:
@@ -72,6 +77,7 @@
       base-modules = [
         nixConfig
         home-manager.nixosModules.home-manager
+        binary-ninja.nixosModules.binaryninja
       ];
       system = "x86_64-linux";
       base-system = sa: rec {

@@ -216,6 +216,10 @@
     partition-manager.enable = true;
     ladybird.enable = true;
     dconf.enable = true;
+    binary-ninja = {
+      enable = true;
+      package = pkgs.binary-ninja-free-wayland;
+    };
   };
 
   # networking.networkmanager.plugins = [ "kwallet" "keyfile" ];

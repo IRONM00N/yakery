@@ -62,6 +62,8 @@
 
           pwntools
 
+          pytest
+
           # jd-gui # removed
         ];
     in

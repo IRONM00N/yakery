@@ -70,6 +70,7 @@
     [
       nix-index
       home-manager
+      nix-output-monitor
 
       networkmanagerapplet
       nwg-displays

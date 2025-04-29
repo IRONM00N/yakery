@@ -11,7 +11,7 @@
     la = "ls -lAh";
     l = "ls -lah";
     nixos-update = "nix flake update --flake /etc/nixos";
-    nixos-rebuild = "sudo nixos-rebuild switch";
+    nixos-switch = "sudo nixos-rebuild switch --log-format internal-json -v |& nom --json";
     edit = "code --wait --new-window --disable-workspace-trust";
     diff = "diff -u";
     vim = "nvim";

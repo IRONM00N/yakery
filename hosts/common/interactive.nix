@@ -193,7 +193,6 @@
     useGlobalPkgs = true;
     sharedModules = [
       inputs.plasma-manager.homeManagerModules.plasma-manager
-      inputs.anyrun.homeManagerModules.default
     ];
     extraSpecialArgs = { inherit info pkgs-stable inputs; };
     users.ironmoon = import ../../users/ironmoon/home-manager.nix;

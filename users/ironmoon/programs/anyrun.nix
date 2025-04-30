@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 {
   enable = true;
   config = {
@@ -22,10 +22,12 @@
     showResultsImmediately = false;
     maxEntries = null;
 
-    plugins = with inputs.anyrun.packages.${pkgs.system}; [
-      applications
-      rink
-      dictionary
+    # TODO: https://github.com/anyrun-org/anyrun/issues/211#issuecomment-2822584485
+    plugins = with pkgs; [
+      "${anyrun}/lib/libapplications.so"
+      "${anyrun}/lib/librink.so"
+      "${anyrun}/lib/libsymbols.so"
+      "${anyrun}/lib/libdictionary.so"
     ];
   };
 
@@ -43,6 +45,15 @@
       Config(
         prefix: ":def",
         max_entries: 5,
+      )
+    '';
+    "symbols.ron".text = ''
+      Config(
+        prefix: "",
+        max_entries: 3,
+        symbols: {
+          "shrug": "¯\\_(ツ)_/¯",
+        },
       )
     '';
   };

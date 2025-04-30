@@ -116,8 +116,8 @@
     enableDefaultPackages = false;
     packages =
       let
-        twemoji-colr = import ../../packages/twemoji-colr/package.nix { inherit pkgs; };
-        twemoji-cbdt = import ../../packages/twemoji-cbdt/package.nix { inherit pkgs; };
+        twemoji-colr = import ../../packages/twemoji-colr/package.nix { inherit pkgs pkgs-stable; };
+        twemoji-cbdt = import ../../packages/twemoji-cbdt/package.nix { inherit pkgs pkgs-stable; };
       in
       with pkgs;
       [
@@ -136,7 +136,7 @@
         source-code-pro
         lato
         open-sans
-        # twemoji-colr
+        twemoji-colr
         twemoji-cbdt
       ];
     fontconfig.defaultFonts.emoji = [ "Twemoji COLR" ];

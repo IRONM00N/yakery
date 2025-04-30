@@ -1,12 +1,12 @@
-# https://github.com/jdecked/twemoji
-# https://github.com/mozilla/twemoji-colr
-{ pkgs }:
+# upstream:
+# - https://github.com/jdecked/twemoji
+# - https://github.com/mozilla/twemoji-colr
+# uses pkgs-stable to avoid excessive rebuilds
+{ pkgs-stable, ... }:
 
-pkgs.stdenv.mkDerivation (final: {
-  pname = "twemoji-colr";
-  version = "15.1.1";
-
-  twemojiSrc = pkgs.fetchFromGitHub {
+let
+  twemoji = pkgs-stable.fetchFromGitHub {
+    name = "twemoji";
     owner = "IRONM00N";
     repo = "twemoji";
     rev = "044e4a8ae646bab4ade3c198ab980560c8f09168";
@@ -16,19 +16,34 @@ pkgs.stdenv.mkDerivation (final: {
   # changes in fork:
   # - change FONT_NAME to "Twemoji COLR" in Makefile
   # - change font name Gruntfile.js
-  twemojiColrSrc = pkgs.fetchFromGitHub {
-    owner = "IRONM00N"; # TODO: change back to mozilla once pr 74 is merged
+  # - update package-lock.json to have `integrity` and `resolved` fields
+  twemoji-colr = pkgs-stable.fetchFromGitHub {
+    name = "twemoji-colr";
+    owner = "IRONM00N";
     repo = "twemoji-colr";
-    rev = "c431322616f5963970d2266b474db2765e4d3cd4";
-    sha256 = "sha256-GgF+65cM3Yc+40vKKY0OL6q1wRT61zQaw6XdcBPcWUk=";
+    rev = "b2f2b905de0d484336e4de8859f449afa111f089";
+    hash = "sha256-iRHtmyCEzGYS1US4uB2laTmC6OhYO0FL0tJ/O1xhxcs=";
   };
+in
+pkgs-stable.buildNpmPackage (final: {
+  pname = "twemoji-colr";
+  version = "15.1.1";
 
-  nativeBuildInputs = with pkgs; [
+  srcs = [
+    twemoji
+    twemoji-colr
+  ];
+
+  sourceRoot = twemoji-colr.name;
+
+  npmDepsHash = "sha256-fZ5Xd70r0t6WMjkAYCktasAuvif0KIIMz6L1Swvznpc=";
+
+  nativeBuildInputs = with pkgs-stable; [
     nodejs
     node-gyp
+    pkg-config
     fontforge
     python3Packages.fonttools
-    python3Packages.setuptools
     python3Packages.distutils
     zip
     unzip
@@ -36,32 +51,27 @@ pkgs.stdenv.mkDerivation (final: {
     perl
   ];
 
-  nodeModules = builtins.path {
-    name = "node_modules";
-    path = ./node_modules.tar.gz;
-  };
-
-  unpackPhase = ''
-    mkdir twemoji
-    cp -r ${final.twemojiSrc}/* twemoji/
-    mkdir twemoji-colr
-    cp -r ${final.twemojiColrSrc}/* twemoji-colr/
-    tar -xzvf ${final.nodeModules} -C twemoji-colr
-  '';
+  buildInputs = with pkgs-stable; [
+    pixman
+    cairo
+    pango
+  ];
 
   buildPhase = ''
-    cd twemoji
-    ls -l
-    zip -r twe-svg.zip assets/svg
-    mv twe-svg.zip ../twemoji-colr/
-    cd ../twemoji-colr
-    # patch #!/usr/bin/env node to nixpkgs node
-    patchShebangs --build node_modules
+    runHook preBuild
+
+    zip -r twe-svg.zip ../twemoji/assets/svg
     make
-    mv "build/Twemoji Mozilla.ttf" build/twemoji-colr.ttf
+    mv "build/Twemoji COLR.ttf" build/twemoji-colr.ttf
+
+    runHook postBuild
   '';
 
   installPhase = ''
+    runHook preInstall
+
     install -Dm644 build/twemoji-colr.ttf $out/share/fonts/truetype/twemoji-colr.ttf
+
+    runHook postInstall
   '';
 })

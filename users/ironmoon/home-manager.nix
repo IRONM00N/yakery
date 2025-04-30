@@ -22,8 +22,8 @@ in
 
   gtk.theme = "Breeze";
 
-  # hyprland enables home-manager xdg config, while plasma doesn't. So we need to 
-  # set all these here. 
+  # hyprland enables home-manager xdg config, while plasma doesn't. So we need to
+  # set all these here.
   xdg.portal = {
     xdgOpenUsePortal = true;
     configPackages =

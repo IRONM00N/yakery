@@ -14,13 +14,13 @@ ocamlPackages.buildDunePackage {
   src = fetch;
   nativeBuildInputs = [ coq ];
   buildInputs =
-    with pkgs;
-    [
+    [ ]
+    ++ (with pkgs; [
       coq
       glib
       adwaita-icon-theme
       wrapGAppsHook3
-    ]
+    ])
     ++ (with ocamlPackages; [
       findlib
       lablgtk3-sourceview3

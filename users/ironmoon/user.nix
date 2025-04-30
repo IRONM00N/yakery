@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-stable,
   additional-pkgs,
   ...
 }:
@@ -103,7 +104,7 @@
       gimp
       inkscape
       krita
-      # blender
+      pkgs-stable.blender
       obs-studio
       vlc
       audacity
@@ -111,7 +112,7 @@
       pkg-config
       obsidian
       krita
-      aseprite
+      pkgs-stable.aseprite # isn't cached and constant rebuilds are annoying
 
       # https://github.com/ibraheemdev/modern-unix
       lazygit
@@ -179,11 +180,11 @@
       metasploit
       ida-free
 
-      jetbrains.idea-ultimate
-      jetbrains.datagrip
-      jetbrains.webstorm
-      jetbrains.pycharm-professional
-      jetbrains.clion
+      pkgs-stable.jetbrains.idea-ultimate
+      pkgs-stable.jetbrains.datagrip
+      pkgs-stable.jetbrains.webstorm
+      pkgs-stable.jetbrains.pycharm-professional
+      pkgs-stable.jetbrains.clion
 
       code-cursor
 
@@ -197,7 +198,8 @@
       })
 
       (calibre.override {
-        unrarSupport = true; # .cbr, .cbz
+        # broken again...
+        # unrarSupport = true; # .cbr, .cbz
       })
       epubcheck
 

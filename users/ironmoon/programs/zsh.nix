@@ -15,6 +15,7 @@
     edit = "code --wait --new-window --disable-workspace-trust";
     diff = "diff -u";
     vim = "nvim";
+    kssh = "kitten ssh";
   };
   history = {
     size = 100000;

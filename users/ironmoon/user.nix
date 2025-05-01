@@ -217,6 +217,11 @@
       jdk17
       avogadro2
       openbabel
+
+      # TODO: https://github.com/NixOS/nixpkgs/issues/371479
+      # TODO: https://github.com/NixOS/nixpkgs/pull/374068
+      # TODO: https://github.com/NixOS/nixpkgs/issues/347350
+      bitwarden-desktop
     ]
     ++ additional-pkgs;
 }

@@ -16,6 +16,7 @@
     diff = "diff -u";
     vim = "nvim";
     kssh = "kitten ssh";
+    lg = "lazygit";
   };
   history = {
     size = 100000;

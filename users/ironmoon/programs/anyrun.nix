@@ -49,7 +49,7 @@
     '';
     "symbols.ron".text = ''
       Config(
-        prefix: "",
+        prefix: ":sym",
         max_entries: 3,
         symbols: {
           "shrug": "¯\\_(ツ)_/¯",

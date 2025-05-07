@@ -2,10 +2,15 @@
 
 with pkgs;
 [
+  coreutils
+  findutils
+  diffutils
+  gawk
+  gnused
+  gnugrep
   util-linux
-  toybox
-  busybox
   binutils
+  tree
   git
   delta
   gnumake

@@ -28,7 +28,9 @@ let
     bindings ++ moveBindings;
 
   terminal = "kitty";
+  emacs = "emacs";
   fileManager = "dolphin";
+  browser = "firefox";
   menu = "anyrun";
   clipboardHist = "cliphist list | wofi --dmenu | cliphist decode | wl-copy";
   ssWindow = "hyprshot -m window";
@@ -114,10 +116,12 @@ in
     # https://wiki.hyprland.org/Configuring/Binds/
     bind = [
       "SUPER, T, exec, ${terminal}"
+      "SUPER, E, exec, ${emacs}"
+      "SUPER, D, exec, ${fileManager}"
+      "SUPER, B, exec, ${browser}"
       "SUPER, Q, killactive,"
       "SUPER, SHIFT ALT Q, forcekillactive,"
       "SUPER, Escape, exec, uwsm stop"
-      "SUPER, E, exec, ${fileManager}"
       "SUPER, F, togglefloating,"
       "SUPER, G, fullscreen,"
       "SUPER, SPACE, exec, ${menu}"

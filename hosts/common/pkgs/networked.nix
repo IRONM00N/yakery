@@ -5,6 +5,8 @@ let
 in
 base-pkgs
 ++ (with pkgs; [
+  inetutils
+
   wget
   nmap
   wireshark

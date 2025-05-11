@@ -2,22 +2,34 @@
 
 with pkgs;
 [
-  coreutils
+  # GNU
+  coreutils-full
   findutils
   diffutils
   gawk
   gnused
   gnugrep
-  util-linux
   binutils
-  tree
-  git
-  delta
-  gnumake
-  htop
   gnupg
-  ripgrep
+  gnumake
+
+  util-linux
+  moreutils
+  psmisc
+  hexedit
+  tree
   ltrace
+  strace
+  pv
+
+  git
+  htop
+  file
+
+  ripgrep
+  fd
+  delta
+  dust
 
   gcc
   gdb

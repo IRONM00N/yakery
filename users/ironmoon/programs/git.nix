@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 {
   enable = true;
   userName = "IRONM00N";
@@ -27,12 +23,17 @@
       };
       push = {
         autoSetupRemote = "true";
+        recurseSubmodules = "on-demand";
       };
       init = {
         defaultBranch = "master";
       };
       rebase = {
         autoStash = "true";
+      };
+      submodule.recurse = "true";
+      alias = {
+        lg = "log --oneline --graph --decorate --all";
       };
     };
 }

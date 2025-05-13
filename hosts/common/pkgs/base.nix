@@ -30,6 +30,7 @@ with pkgs;
   fd
   delta
   dust
+  moar # much nicer pager
 
   gcc
   gdb

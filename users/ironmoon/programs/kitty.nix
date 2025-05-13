@@ -2,7 +2,8 @@
 {
   enable = true;
 
-  font.name = "Fira Code Nerd Font";
+  # font.name = "FiraCode Nerd Font";
+  font.name = "JetBrainsMono Nerd Font"; # FiraCode doesn't have italic
   settings = {
     scrollback_lines = 20000;
   };

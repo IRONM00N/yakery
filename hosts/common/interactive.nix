@@ -132,6 +132,8 @@
         fira-code
         fira-code-symbols
         nerd-fonts.fira-code
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.symbols-only
         font-awesome
         source-code-pro
         lato

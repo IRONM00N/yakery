@@ -30,7 +30,7 @@ let
   terminal = "kitty";
   emacs = "emacs";
   fileManager = "dolphin";
-  browser = "firefox";
+  browser = "firefox -new-tab";
   menu = "anyrun";
   clipboardHist = "cliphist list | wofi --dmenu | cliphist decode | wl-copy";
   ssWindow = "hyprshot -m window";
@@ -121,7 +121,7 @@ in
       "SUPER, B, exec, ${browser}"
       "SUPER, Q, killactive,"
       "SUPER, SHIFT ALT Q, forcekillactive,"
-      "SUPER, Escape, exec, uwsm stop"
+      "SUPER SHIFT, Delete, exec, uwsm stop"
       "SUPER, F, togglefloating,"
       "SUPER, G, fullscreen,"
       "SUPER, SPACE, exec, ${menu}"

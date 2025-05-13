@@ -75,6 +75,7 @@
 
       networkmanagerapplet
       nwg-displays
+      wev
 
       kdePackages.plasma-desktop
       kdePackages.kate
@@ -217,11 +218,16 @@
       jdk17
       avogadro2
       openbabel
+      shellcheck
 
       # TODO: https://github.com/NixOS/nixpkgs/issues/371479
       # TODO: https://github.com/NixOS/nixpkgs/pull/374068
       # TODO: https://github.com/NixOS/nixpkgs/issues/347350
       bitwarden-desktop
+
+      # LSPs
+
+      lua-language-server
     ]
     ++ additional-pkgs;
 }

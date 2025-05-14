@@ -26,6 +26,13 @@ in
 
   home.file.".p10k.zsh".source = ./resources/.p10k.zsh;
 
+  home.sessionVariables = {
+    PAGER = "${pkgs.moar}/bin/moar";
+    VISUAL = "${pkgs.vscode}/bin/code --wait --new-window";
+    SUDO_EDITOR = "${pkgs.vscode}/bin/code --wait --new-window --disable-workspace-trust";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+  };
+
   gtk.theme = "Breeze";
 
   # hyprland enables home-manager xdg config, while plasma doesn't. So we need to

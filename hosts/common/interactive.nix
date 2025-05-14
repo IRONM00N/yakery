@@ -76,9 +76,6 @@ in
 
   # system wide environment variables
   environment.variables = {
-    VISUAL = "${pkgs.vscode}/bin/code --wait --new-window";
-    SUDO_EDITOR = "${pkgs.vscode}/bin/code --wait --new-window --disable-workspace-trust";
-    ELECTRON_OZONE_PLATFORM_HINT = "auto";
     DO_NOT_TRACK = 1;
   };
 

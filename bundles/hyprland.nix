@@ -19,12 +19,16 @@ in
   };
 
   config = mkIf cfg.enable {
+    security.polkit.enable = true;
+
     programs.hyprland = {
       enable = true;
       withUWSM = true;
     };
     programs.hyprlock.enable = true;
     services.hypridle.enable = true;
+
+    qt.enable = true;
 
     xdg.portal = {
       enable = true;
@@ -41,6 +45,10 @@ in
           xdg-desktop-portal-hyprland
         ];
     };
+
+    security.pam.services.login.enableGnomeKeyring = true;
+    security.pam.services.sddm.enableGnomeKeyring = true;
+    services.gnome.gnome-keyring.enable = true;
 
     environment.systemPackages = with pkgs; [
       hyprland

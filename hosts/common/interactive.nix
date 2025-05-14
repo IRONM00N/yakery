@@ -44,13 +44,6 @@ in
   # use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # security
-  security.polkit.enable = true;
-  # security.polkit.debug = true;
-  security.pam.services.login.enableGnomeKeyring = true;
-  security.pam.services.sddm.enableGnomeKeyring = true;
-  services.gnome.gnome-keyring.enable = true;
-
   # bluetooth
   hardware.bluetooth = {
     enable = true;
@@ -67,8 +60,6 @@ in
     pulse.enable = lib.mkDefault true;
   };
 
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -99,8 +90,8 @@ in
   services.udisks2.enable = true; # for calibre
 
   # virtualization
-  virtualisation.libvirtd.enable = true;
   virtualisation.docker.enable = true;
+  virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
   # user account.
@@ -117,6 +108,7 @@ in
     useUserPackages = true;
     useGlobalPkgs = true;
     sharedModules = [
+      # needed even when not using fill kde (konsole, dolphin, etc)
       inputs.plasma-manager.homeManagerModules.plasma-manager
     ];
     extraSpecialArgs = {

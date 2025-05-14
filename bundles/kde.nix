@@ -20,7 +20,6 @@ in
 
   config = mkIf cfg.enable {
     services.xserver.enable = true;
-    services.displayManager.sddm.wayland.compositor = "kwin";
     services.desktopManager.plasma6.enable = true;
 
     # TODO: some of these may be already set in the plasma6 module

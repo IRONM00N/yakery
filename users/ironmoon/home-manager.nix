@@ -1,7 +1,9 @@
 {
   inputs,
   config,
+  lib,
   pkgs,
+  pkgs-stable,
   host,
   ...
 }:
@@ -12,7 +14,9 @@ let
       inherit
         inputs
         config
+        lib
         pkgs
+        pkgs-stable
         ;
     };
 in

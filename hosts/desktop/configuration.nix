@@ -5,6 +5,7 @@
 {
   inputs,
   config,
+  lib,
   pkgs,
   pkgs-stable,
   system,
@@ -21,6 +22,7 @@ in
       inherit
         inputs
         config
+        lib
         pkgs
         pkgs-stable
         additional-user-pkgs

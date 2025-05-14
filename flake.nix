@@ -98,7 +98,7 @@
     in
     {
       nixosConfigurations = {
-        framework = nixpkgs.lib.nixosSystem (
+        framework = lib.nixosSystem (
           base-system
           // {
             modules = base-modules ++ [
@@ -107,7 +107,7 @@
             ];
           }
         );
-        desktop = nixpkgs.lib.nixosSystem (
+        desktop = lib.nixosSystem (
           base-system
           // {
             modules = base-modules ++ [

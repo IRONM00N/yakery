@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  lib,
   pkgs,
   pkgs-stable,
   additional-user-pkgs,
@@ -12,6 +13,7 @@ let
     inherit
       inputs
       config
+      lib
       pkgs
       pkgs-stable
       system
@@ -56,13 +58,13 @@ in
   };
 
   # audios
-  services.pulseaudio.enable = pkgs.lib.mkDefault false;
+  services.pulseaudio.enable = lib.mkDefault false;
   security.rtkit.enable = true;
   services.pipewire = {
-    enable = pkgs.lib.mkDefault true;
-    alsa.enable = pkgs.lib.mkDefault true;
-    alsa.support32Bit = pkgs.lib.mkDefault true;
-    pulse.enable = pkgs.lib.mkDefault true;
+    enable = lib.mkDefault true;
+    alsa.enable = lib.mkDefault true;
+    alsa.support32Bit = lib.mkDefault true;
+    pulse.enable = lib.mkDefault true;
   };
 
   services.displayManager.sddm.enable = true;
@@ -125,8 +127,8 @@ in
   };
 
   programs = {
-    firefox = import ./programs/firefox.nix { inherit pkgs; };
-    thunderbird = import ./programs/thunderbird.nix { inherit pkgs; };
+    firefox = importWith ./programs/firefox.nix;
+    thunderbird = importWith ./programs/thunderbird.nix;
     zsh.enable = true;
     gnupg.agent = {
       enable = true;

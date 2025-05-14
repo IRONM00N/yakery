@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, ... }:
 let
   durations = { laptop, desktop }: builtins.floor (if config.host.laptop then laptop else desktop);
 in
@@ -45,7 +45,7 @@ in
           on-resume = "hyprctl dispatch dpms on";
         }
       ]
-      ++ pkgs.lib.optional config.host.laptop {
+      ++ lib.optional config.host.laptop {
         timeout = 30 * 60;
         on-timeout = "systemctl suspend";
       };

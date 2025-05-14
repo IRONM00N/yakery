@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, lib }:
 
 let
   coq = pkgs.coq;
@@ -38,7 +38,7 @@ ocamlPackages.buildDunePackage {
       ppx_optcomp
     ]);
 
-  meta = with pkgs.lib; {
+  meta = with lib; {
     description = "Language server for the vscoq vscode/codium extension";
     homepage = "https://github.com/coq-community/vscoq";
     maintainers = with maintainers; [ cohencyril ];

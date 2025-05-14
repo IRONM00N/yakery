@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, ... }:
 let
   workspaceBinding =
     with builtins;
@@ -59,7 +59,7 @@ in
         "NIXOS_OZONE_WL,1"
         "XDG_MENU_PREFIX,plasma-"
       ]
-      ++ pkgs.lib.optionals config.host.nvidia [
+      ++ lib.optionals config.host.nvidia [
         "LIBVA_DRIVER_NAME,nvidia"
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       ];
@@ -111,7 +111,7 @@ in
       workspace_swipe = true;
     };
 
-    render.explicit_sync = pkgs.lib.mkIf config.host.nvidia 0;
+    render.explicit_sync = lib.mkIf config.host.nvidia 0;
 
     # https://wiki.hyprland.org/Configuring/Binds/
     bind = [

@@ -2,6 +2,7 @@
   pkgs,
   pkgs-stable,
   additional-pkgs,
+  config,
   ...
 }:
 {
@@ -68,7 +69,25 @@
           # jd-gui # removed
         ];
     in
-    [
+    [ ]
+    ++ lib.optionals config.host.hyprland [
+      kdePackages.dolphin
+      kdePackages.kdegraphics-thumbnailers # previews
+
+      # still want breeze
+      kdePackages.breeze
+      kdePackages.breeze-gtk
+      kdePackages.breeze-icons
+    ]
+    ++ lib.optionals config.host.kde [
+      kdePackages.plasma-desktop
+
+      kdePackages.kcolorchooser
+      kdePackages.kwallet-pam
+      kdePackages.plasma-firewall
+      libsForQt5.kde-cli-tools
+    ]
+    ++ [
       nix-index
       home-manager
       nix-output-monitor
@@ -77,18 +96,13 @@
       nwg-displays
       wev
 
-      kdePackages.plasma-desktop
       kdePackages.kate
       kdePackages.kdenlive
-      kdePackages.kcolorchooser
       kdePackages.kcalc
       kdePackages.ksystemlog
       kdePackages.ktimer
       kdePackages.kalarm
       kdePackages.kweather
-      kdePackages.kwallet-pam
-      kdePackages.plasma-firewall
-      libsForQt5.kde-cli-tools
 
       google-chrome
       # firefox enabled with home-manager

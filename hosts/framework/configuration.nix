@@ -84,8 +84,6 @@ in
       powertop
     ]);
 
-  services.cpupower-gui.enable = true;
-
   # fingerprint reader support
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = false; # waits for fingerprint otherwise

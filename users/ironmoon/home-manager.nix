@@ -37,8 +37,45 @@ in
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
   };
 
-  gtk.theme = "Breeze";
+  home.pointerCursor = {
+    enable = true;
+    gtk.enable = true;
+    name = "breeze_cursors";
+    package = pkgs.kdePackages.breeze;
+    size = 24;
+  };
 
+  # qt = {
+  #   enable = false;
+  #   style = {
+  #     name = "breeze";
+  #     package = pkgs.kdePackages.breeze;
+  #   };
+  # };
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Breeze";
+      package = pkgs.kdePackages.breeze-gtk;
+    };
+
+    iconTheme = {
+      package = pkgs.kdePackages.breeze-icons;
+      name = "Breeze";
+    };
+  };
+
+  dconf = {
+    enable = false;
+    settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
+  };
+
+  # TODO: work on making these specialized for each DE
   # hyprland enables home-manager xdg config, while plasma doesn't. So we need to
   # set all these here.
   xdg.portal = {

@@ -16,8 +16,8 @@ pkgs-stable.stdenv.mkDerivation rec {
     name = "twemoji";
     owner = "IRONM00N";
     repo = "twemoji";
-    rev = "044e4a8ae646bab4ade3c198ab980560c8f09168";
-    hash = "sha256-RrM9r8HNekzesR4IsdfZQquWWHPNarSWJLOlwtymCrU=";
+    rev = "188c19556b1c41c4009dffdb36ad19dbdbf50eb2";
+    hash = "sha256-wZLuob2Ap9Dm9c0T8rl/HgldrPJz+CXORu9UkiME3e8=";
   };
 
   srcs = [

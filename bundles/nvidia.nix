@@ -18,10 +18,10 @@ in
 
   config = mkIf cfg.enable {
     # Enable OpenGL
-    hardware.graphics = mkIf info.nvidia {
+    hardware.graphics = {
       enable = true;
     };
-    hardware.nvidia = mkIf info.nvidia {
+    hardware.nvidia = {
       modesetting.enable = true;
       powerManagement.enable = false;
       powerManagement.finegrained = false;
@@ -31,6 +31,6 @@ in
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
     # Load nvidia driver for Xorg and Wayland
-    services.xserver.videoDrivers = mkIf info.nvidia [ "nvidia" ];
+    services.xserver.videoDrivers = [ "nvidia" ];
   };
 }

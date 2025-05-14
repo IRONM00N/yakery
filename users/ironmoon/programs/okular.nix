@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}:
+{ ... }:
 {
   enable = true;
   general = {

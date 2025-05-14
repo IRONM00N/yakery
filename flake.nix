@@ -66,12 +66,12 @@
       treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
     in
     let
-      base-config = {
+      base-nixpkgs-config = {
         allowUnfree = true;
       };
       nixConfig = {
         nixpkgs.overlays = import ./overlays/default.nix;
-        nixpkgs.config = base-config;
+        nixpkgs.config = base-nixpkgs-config;
 
         nix.settings.experimental-features = [
           "nix-command"
@@ -80,35 +80,26 @@
       };
       base-modules = [
         nixConfig
+        ./hosts/options.nix
         home-manager.nixosModules.home-manager
         binary-ninja.nixosModules.binaryninja
       ];
       system = "x86_64-linux";
-      base-system = sa: rec {
+      base-system = rec {
         inherit system;
-        specialArgs = (
-          {
-            inherit inputs system;
-            pkgs-stable = import nixpkgs-stable {
-              inherit system;
-              config = base-config;
-            };
-          }
-          // sa
-        );
+        specialArgs = ({
+          inherit inputs system;
+          pkgs-stable = import nixpkgs-stable {
+            inherit system;
+            config = base-nixpkgs-config;
+          };
+        });
       };
     in
     {
       nixosConfigurations = {
         framework = nixpkgs.lib.nixosSystem (
-          (base-system {
-            info = {
-              laptop = true;
-              nvidia = false;
-              fingerprint = true;
-              id = "framework-13-7040-amd";
-            };
-          })
+          base-system
           // {
             modules = base-modules ++ [
               nixos-hardware.nixosModules.framework-13-7040-amd
@@ -117,14 +108,7 @@
           }
         );
         desktop = nixpkgs.lib.nixosSystem (
-          (base-system {
-            info = {
-              laptop = false;
-              nvidia = true;
-              fingerprint = false;
-              id = "desktop-2070super"; # get better id
-            };
-          })
+          base-system
           // {
             modules = base-modules ++ [
               ./hosts/desktop/configuration.nix

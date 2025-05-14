@@ -1,4 +1,4 @@
-{ info, ... }:
+{ config, ... }:
 let
   night-landscape = builtins.toString (
     builtins.path {
@@ -12,10 +12,11 @@ let
       name = "boat_lake-2256x1504.png";
     }
   );
-  used_paper = if info.id == "framework-13-7040-amd" then boat_lake-2256x1504 else night-landscape;
+  used_paper =
+    if config.host.id == "framework-13-7040-amd" then boat_lake-2256x1504 else night-landscape;
 in
 {
-  enable = true;
+  enable = config.host.hyprland;
 
   settings = {
     ipc = "on";

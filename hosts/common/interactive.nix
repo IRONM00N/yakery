@@ -4,18 +4,34 @@
   pkgs,
   pkgs-stable,
   additional-user-pkgs,
-  info,
   system,
   ...
 }:
+let
+  args = {
+    inherit
+      inputs
+      config
+      pkgs
+      pkgs-stable
+      system
+      ;
+  };
+  importWith = path: import path args;
+in
 {
   imports = [
     ./networked.nix
   ];
 
-  services.resolved.enable = true;
-  # services.mullvad-vpn.enable = true;
-  # services.mullvad-vpn.package = pkgs.mullvad-vpn;
+  bundles.fonts.enable = true;
+  bundles.mullvad-vpn.enable = false;
+  bundles.nvidia.enable = config.host.nvidia;
+
+  specialisation = {
+    kde.configuration = importWith ./specializations/kde.nix;
+    hyprland.configuration = importWith ./specializations/hyprland.nix;
+  };
 
   # SECURITY: this is fine for single user, personal systems.
   nix.settings.trusted-users = [
@@ -29,12 +45,6 @@
   # security
   security.polkit.enable = true;
   # security.polkit.debug = true;
-  security.pam.services.login.kwallet.enable = true;
-  security.pam.services.login.kwallet.forceRun = true;
-  security.pam.services.login.kwallet.package = pkgs.lib.mkForce pkgs.kdePackages.kwallet-pam;
-  security.pam.services.ssdm.kwallet.enable = true;
-  security.pam.services.ssdm.kwallet.forceRun = true;
-  security.pam.services.ssdm.kwallet.package = pkgs.lib.mkForce pkgs.kdePackages.kwallet-pam;
   security.pam.services.login.enableGnomeKeyring = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
   services.gnome.gnome-keyring.enable = true;
@@ -55,44 +65,13 @@
     pulse.enable = pkgs.lib.mkDefault true;
   };
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
-  services.displayManager.sddm.wayland.compositor = "kwin";
-  services.desktopManager.plasma6.enable = true;
-
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-  };
-  programs.hyprlock.enable = true;
-  services.hypridle.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
-  };
-
-  # xdg portals
-  xdg.portal = {
-    enable = true;
-    xdgOpenUsePortal = true;
-    configPackages =
-      with pkgs;
-      lib.mkForce [
-        kdePackages.plasma-workspace
-        hyprland
-      ];
-    extraPortals =
-      with pkgs;
-      lib.mkForce [
-        kdePackages.kwallet
-        kdePackages.xdg-desktop-portal-kde
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-hyprland
-      ];
   };
 
   # system wide environment variables
@@ -111,56 +90,6 @@
   ];
   users.defaultUserShell = pkgs.zsh;
 
-  # fonts
-  fonts = {
-    enableDefaultPackages = false;
-    packages =
-      let
-        twemoji-colr = import ../../packages/twemoji-colr/package.nix { inherit pkgs pkgs-stable; };
-        twemoji-cbdt = import ../../packages/twemoji-cbdt/package.nix { inherit pkgs pkgs-stable; };
-      in
-      with pkgs;
-      [
-        # default minus noto-fonts-color-emoji
-        dejavu_fonts
-        freefont_ttf
-        gyre-fonts
-        liberation_ttf
-        unifont
-
-        # other
-        fira-code
-        fira-code-symbols
-        nerd-fonts.fira-code
-        nerd-fonts.jetbrains-mono
-        nerd-fonts.symbols-only
-        font-awesome
-        source-code-pro
-        lato
-        open-sans
-        twemoji-colr
-        twemoji-cbdt
-      ];
-    fontconfig.defaultFonts.emoji = [ "Twemoji COLR" ];
-    # fontconfig.localConf = ''
-    #   <?xml version="1.0"?>
-    #   <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
-    #   <fontconfig>
-    #     <alias binding="same">
-    #       <family>Twemoji Color CBDT</family>
-    #       <default><family>emoji</family></default>
-    #     </alias>
-    #     <alias binding="same">
-    #       <family>emoji</family>
-    #       <prefer>
-    #         <family>Twemoji Color COLR</family>
-    #         <family>Twemoji Color CBDT</family>
-    #       </prefer>
-    #     </alias>
-    #   </fontconfig>
-    # '';
-  };
-
   # services
   services.openssh.enable = true;
   services.avahi = {
@@ -177,17 +106,12 @@
 
   # user account.
   # set a password with `passwd`
-  users.users.ironmoon = import ../../users/ironmoon/user.nix {
-    inherit
-      inputs
-      config
-      pkgs
-      pkgs-stable
-      info
-      system
-      ;
-    additional-pkgs = additional-user-pkgs;
-  };
+  users.users.ironmoon = import ../../users/ironmoon/user.nix (
+    {
+      additional-pkgs = additional-user-pkgs;
+    }
+    // args
+  );
 
   # home-manager
   home-manager = {
@@ -196,7 +120,10 @@
     sharedModules = [
       inputs.plasma-manager.homeManagerModules.plasma-manager
     ];
-    extraSpecialArgs = { inherit info pkgs-stable inputs; };
+    extraSpecialArgs = {
+      inherit pkgs-stable inputs;
+      host = config.host;
+    };
     users.ironmoon = import ../../users/ironmoon/home-manager.nix;
   };
 
@@ -223,26 +150,7 @@
     };
   };
 
-  # networking.networkmanager.plugins = [ "kwallet" "keyfile" ];
-
   # generate man pages
   # documentation.dev.enable = true;
   # documentation.man.generateCaches = true;
-
-  # ----------------------------- nvidia bullshit -----------------------------
-  # Enable OpenGL
-  hardware.graphics = pkgs.lib.mkIf info.nvidia {
-    enable = true;
-  };
-  hardware.nvidia = pkgs.lib.mkIf info.nvidia {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    # these are not yet ready:
-    open = true;
-    nvidiaSettings = true; # nvidia-settings
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = pkgs.lib.mkIf info.nvidia [ "nvidia" ];
 }

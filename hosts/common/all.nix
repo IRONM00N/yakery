@@ -1,9 +1,14 @@
 { ... }:
 {
+  # all bundles are behind an `enable` option
+  imports = [
+    ../../bundles/default.nix
+  ];
+
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-  # Select internationalisation properties.
+  # Select internationalization properties.
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";

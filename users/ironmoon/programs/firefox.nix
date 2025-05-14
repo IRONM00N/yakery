@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}:
+{ ... }:
 let
   common-settings = {
     "widget.use-xdg-desktop-portal.file-picker" = 1;

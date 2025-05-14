@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 let
   base00 = "#181818"; # #181818
   base01 = "#2b2e37"; # #2b2e37
@@ -18,7 +18,7 @@ let
   base0F = "#a16946"; # #a16946
 in
 {
-  enable = true;
+  enable = config.host.hyprland;
 
   systemd = {
     enable = true;

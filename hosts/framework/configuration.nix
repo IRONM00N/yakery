@@ -7,13 +7,12 @@
   config,
   pkgs,
   pkgs-stable,
-  info,
   system,
   ...
 }:
 let
-  additional-user-pkgs = import ./additional-user-pkgs.nix { inherit pkgs info; };
-  interactive-pkgs = import ../common/pkgs/interactive.nix { inherit pkgs info; };
+  additional-user-pkgs = import ./additional-user-pkgs.nix { inherit config pkgs; };
+  interactive-pkgs = import ../common/pkgs/interactive.nix { inherit config pkgs; };
 in
 {
   imports = [
@@ -24,12 +23,18 @@ in
         config
         pkgs
         pkgs-stable
-        info
         additional-user-pkgs
         system
         ;
     })
   ];
+
+  host = {
+    id = "framework-13-7040-amd";
+    hostname = "framework";
+    laptop = true;
+    fingerprint = true;
+  };
 
   boot.loader = {
     efi = {
@@ -62,7 +67,6 @@ in
     };
   };
 
-  networking.hostName = "framework";
   services.printing.enable = true; # enable if need to print
   services.fwupd.enable = true;
 

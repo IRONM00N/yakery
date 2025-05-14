@@ -1,4 +1,4 @@
-{ info, ... }:
+{ config, ... }:
 let
   night-landscape = builtins.toString (
     builtins.path {
@@ -8,11 +8,11 @@ let
   );
 in
 {
-  enable = true;
+  enable = config.host.hyprland;
   settings = {
     auth = {
       "pam:enabled" = true;
-      "fingerprint:enabled" = info.fingerprint;
+      "fingerprint:enabled" = config.host.fingerprint;
     };
 
     background = [

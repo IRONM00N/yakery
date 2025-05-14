@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   scarlet_tree = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/ScarletTree/contents/images_dark/5120x2880.png";
 in
 {
-  enable = true;
+  enable = config.host.kde;
   configFile = {
     "spectaclerc"."General"."launchAction" = "UseLastUsedCapturemode";
     "spectaclerc"."GuiConfig"."captureMode" = 0;

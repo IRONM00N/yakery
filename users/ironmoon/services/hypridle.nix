@@ -1,9 +1,9 @@
-{ info, pkgs, ... }:
+{ config, pkgs, ... }:
 let
-  durations = { laptop, desktop }: builtins.floor (if info.laptop then laptop else desktop);
+  durations = { laptop, desktop }: builtins.floor (if config.host.laptop then laptop else desktop);
 in
 {
-  enable = true;
+  enable = config.host.hyprland;
   settings = {
     general = {
       lock_cmd = "pidof hyprlock || hyprlock";
@@ -45,7 +45,7 @@ in
           on-resume = "hyprctl dispatch dpms on";
         }
       ]
-      ++ pkgs.lib.optional info.laptop {
+      ++ pkgs.lib.optional config.host.laptop {
         timeout = 30 * 60;
         on-timeout = "systemctl suspend";
       };

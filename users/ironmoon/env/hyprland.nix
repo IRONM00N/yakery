@@ -1,4 +1,4 @@
-{ info, pkgs, ... }:
+{ config, pkgs, ... }:
 let
   workspaceBinding =
     with builtins;
@@ -39,7 +39,7 @@ let
   colorPick = "hyprpicker -a -n -q";
 in
 {
-  enable = true;
+  enable = config.host.hyprland;
 
   # conflicts with uwsm
   systemd.enable = false;
@@ -59,7 +59,7 @@ in
         "NIXOS_OZONE_WL,1"
         "XDG_MENU_PREFIX,plasma-"
       ]
-      ++ pkgs.lib.optionals info.nvidia [
+      ++ pkgs.lib.optionals config.host.nvidia [
         "LIBVA_DRIVER_NAME,nvidia"
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       ];
@@ -111,7 +111,7 @@ in
       workspace_swipe = true;
     };
 
-    render.explicit_sync = pkgs.lib.mkIf info.nvidia 0;
+    render.explicit_sync = pkgs.lib.mkIf config.host.nvidia 0;
 
     # https://wiki.hyprland.org/Configuring/Binds/
     bind = [

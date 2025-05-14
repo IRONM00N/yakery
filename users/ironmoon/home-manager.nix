@@ -2,7 +2,7 @@
   inputs,
   config,
   pkgs,
-  info,
+  host,
   ...
 }:
 let
@@ -13,11 +13,17 @@ let
         inputs
         config
         pkgs
-        info
         ;
     };
 in
 {
+  imports = [
+    ../../hosts/options.nix
+    ./services/network-manager-applet.nix
+  ];
+
+  host = host;
+
   home.file.".p10k.zsh".source = ./resources/.p10k.zsh;
 
   gtk.theme = "Breeze";
@@ -126,7 +132,6 @@ in
     hypridle = importMod ./services/hypridle.nix;
     hyprpaper = importMod ./services/hyprpaper.nix;
   };
-  imports = [ ./services/network-manager-applet.nix ];
 
   programs.plasma = importMod ./env/plasma.nix;
   wayland.windowManager.hyprland = importMod ./env/hyprland.nix;

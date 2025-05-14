@@ -7,13 +7,12 @@
   config,
   pkgs,
   pkgs-stable,
-  info,
   system,
   ...
 }:
 let
-  additional-user-pkgs = import ./additional-user-pkgs.nix { inherit pkgs info; };
-  interactive-pkgs = import ../common/pkgs/interactive.nix { inherit pkgs info; };
+  additional-user-pkgs = import ./additional-user-pkgs.nix { inherit config pkgs; };
+  interactive-pkgs = import ../common/pkgs/interactive.nix { inherit config pkgs; };
 in
 {
   imports = [
@@ -24,19 +23,22 @@ in
         config
         pkgs
         pkgs-stable
-        info
         additional-user-pkgs
         system
         ;
     })
   ];
 
+  host = {
+    id = "desktop-2070super"; # TODO: get better id
+    hostname = "desktop";
+    nvidia = true;
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.configurationLimit = 2;
-
-  networking.hostName = "desktop";
 
   environment.systemPackages =
     interactive-pkgs

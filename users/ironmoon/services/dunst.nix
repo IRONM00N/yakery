@@ -1,6 +1,6 @@
-{ ... }:
+{ config, ... }:
 {
-  enable = true;
+  enable = config.host.hyprland;
 
   settings = {
     global = {

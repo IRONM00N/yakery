@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
-  enable = true;
+  enable = config.host.hyprland;
   config = {
     x = {
       fraction = 0.5;

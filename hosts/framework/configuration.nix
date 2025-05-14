@@ -38,6 +38,8 @@ in
     fingerprint = true;
   };
 
+  bundles.ctf.enable = true;
+
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
@@ -83,44 +85,6 @@ in
     ]);
 
   services.cpupower-gui.enable = true;
-
-  # WARNING nix-ld: this should only be used for hacky situations such as CTFs
-  # otherwise this negates the benefits of nix
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      # Add any missing dynamic libraries for unpackaged programs
-      # here, NOT in environment.systemPackages
-
-      glib
-      nss
-      nspr
-      dbus
-      atk
-      # atk-bridge
-      at-spi2-atk
-      cups
-      libdrm
-      gtk3
-      pango
-      cairo
-      xorg.libX11
-      xorg.libXcomposite
-      xorg.libXdamage
-      xorg.libXext
-      xorg.libXfixes
-      xorg.libXrandr
-      # gbm
-      mesa
-      expat
-      xorg.libxcb
-      libxkbcommon
-      alsa-lib
-      # at-spi2-core
-
-      kdePackages.full
-    ];
-  };
 
   # fingerprint reader support
   services.fprintd.enable = true;

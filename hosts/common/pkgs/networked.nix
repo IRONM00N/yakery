@@ -11,6 +11,7 @@ base-pkgs
   nmap
   wireshark
   dig
+  netcat
 
   # sets up server for remote development
   vscode-extensions.ms-vscode-remote.remote-ssh

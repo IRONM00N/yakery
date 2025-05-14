@@ -8,15 +8,6 @@ base-pkgs
   qemu
 
   exiftool
-  hashcat
-  # john # the ripper
-  hash-identifier
-  netcat
-  binwalk
-  zsteg
-  steghide
-  # todo: reenable
-  # sonic-visualiser
 
   usbmuxd
 

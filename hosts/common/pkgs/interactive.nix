@@ -33,18 +33,4 @@ base-pkgs
 
   kdePackages.qtwayland
   kdePackages.qtsvg
-
-  # mullvad-vpn
-  # mullvad
-
-  hyprland
-  kitty
-  hyprpicker
-  wofi
-  cliphist
-  brightnessctl
-  hyprpicker
-  hypridle
-  hyprlock
-  hyprshot
 ])

@@ -21,5 +21,10 @@ in
     services.resolved.enable = true;
     services.mullvad-vpn.enable = mkDefault true;
     services.mullvad-vpn.package = mkDefault pkgs.mullvad-vpn;
+
+    environment.systemPackages = with pkgs; [
+      mullvad-vpn
+      mullvad
+    ];
   };
 }

@@ -41,5 +41,18 @@ in
           xdg-desktop-portal-hyprland
         ];
     };
+
+    environment.systemPackages = with pkgs; [
+      hyprland
+      hyprpicker
+      kitty
+      wofi
+      cliphist
+      brightnessctl
+      hyprpicker
+      hypridle
+      hyprlock
+      hyprshot
+    ];
   };
 }

@@ -39,6 +39,7 @@ in
   };
 
   bundles.ctf.enable = true;
+  bundles.printing.enable = false;
 
   boot.loader = {
     efi = {
@@ -71,7 +72,6 @@ in
     };
   };
 
-  services.printing.enable = true; # enable if need to print
   services.fwupd.enable = true;
 
   # List packages installed in system profile. To search, run:

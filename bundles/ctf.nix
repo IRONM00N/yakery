@@ -51,7 +51,6 @@ in
         atk
         # atk-bridge
         at-spi2-atk
-        cups
         libdrm
         gtk3
         pango

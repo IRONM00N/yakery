@@ -7,5 +7,6 @@
     ./fonts.nix
     ./mullvad-vpn.nix
     ./ctf.nix
+    ./printing.nix
   ];
 }

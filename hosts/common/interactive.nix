@@ -128,6 +128,7 @@ in
       localNetworkGameTransfers.openFirewall = true;
     };
     partition-manager.enable = true;
+    gnome-disks.enable = true;
     ladybird.enable = true;
     dconf.enable = true;
     binary-ninja = {

@@ -24,6 +24,7 @@ in
   imports = [
     ../../hosts/options.nix
     ./services/network-manager-applet.nix
+    ./services/hyprpolkitagent.nix
   ];
 
   host = host;

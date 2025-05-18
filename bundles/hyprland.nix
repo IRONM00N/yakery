@@ -20,6 +20,7 @@ in
 
   config = mkIf cfg.enable {
     security.polkit.enable = true;
+    security.polkit.debug = true;
 
     programs.hyprland = {
       enable = true;
@@ -61,6 +62,7 @@ in
       hypridle
       hyprlock
       hyprshot
+      hyprpolkitagent
     ];
   };
 }

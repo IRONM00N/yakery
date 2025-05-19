@@ -44,6 +44,7 @@ in
         lib.mkForce [
           xdg-desktop-portal-gtk
           xdg-desktop-portal-hyprland
+          kdePackages.xdg-desktop-portal-kde # for dolphin
         ];
     };
 

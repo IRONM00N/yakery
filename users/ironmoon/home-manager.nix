@@ -24,7 +24,6 @@ in
   imports = [
     ../../hosts/options.nix
     ./services/network-manager-applet.nix
-    ./services/hyprpolkitagent.nix
   ];
 
   host = host;
@@ -180,6 +179,7 @@ in
     dunst = importMod ./services/dunst.nix;
     hypridle = importMod ./services/hypridle.nix;
     hyprpaper = importMod ./services/hyprpaper.nix;
+    hyprpolkitagent = importMod ./services/hyprpolkitagent.nix;
   };
 
   programs.plasma = importMod ./env/plasma.nix;

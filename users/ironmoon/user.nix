@@ -71,6 +71,7 @@
     in
     [ ]
     ++ lib.optionals config.host.hyprland [
+      kdePackages.kservice
       kdePackages.dolphin
       kdePackages.kdegraphics-thumbnailers # previews
 

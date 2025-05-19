@@ -31,7 +31,7 @@
     fsType = "ext4";
   };
 
-  fileSystems."/boot" = {
+  fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/3090-B52F";
     fsType = "vfat";
     options = [

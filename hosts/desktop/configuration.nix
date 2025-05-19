@@ -37,6 +37,9 @@ in
     nvidia = true;
   };
 
+  bundles.displaylink.enable = true;
+  services.fwupd.enable = true;
+
   # Bootloader.
   boot.loader = {
     efi = {

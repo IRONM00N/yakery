@@ -8,5 +8,7 @@
     ./mullvad-vpn.nix
     ./ctf.nix
     ./printing.nix
+
+    ./displaylink.nix
   ];
 }

@@ -113,7 +113,7 @@ in
 
     render.explicit_sync = lib.mkIf config.host.nvidia 0;
 
-    # https://wiki.hyprland.org/Configuring/Binds/
+    # https://wiki.hyprland.org/Configuring/Binds/, wev to inspect
     bind = [
       "SUPER, T, exec, ${terminal}"
       "SUPER, E, exec, ${emacs}"
@@ -163,6 +163,13 @@ in
       "SUPER CTRL ALT, left, workspace, r-1"
       "SUPER CTRL ALT, right, workspace, r+1"
     ] ++ workspaceBinding;
+
+    binde = [
+      # zooming, inspired by https://reddit.com/comments/1c61h25/-/m444x7r
+      "SUPER, equal,     exec, hyprctl keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 + ($2 * 0.1)}')"
+      "SUPER, minus,     exec, hyprctl keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor | awk '/^float.*/ {print $2 - ($2 * 0.1)}')"
+      "SUPER, BackSpace, exec, hyprctl keyword cursor:zoom_factor 1"
+    ];
 
     bindm = [
       # Move/resize windows with mainMod + LMB/RMB and dragging

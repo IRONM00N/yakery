@@ -19,6 +19,8 @@ let
         pkgs-stable
         ;
     };
+  symlink = config.lib.file.mkOutOfStoreSymlink;
+  dot-root = "/etc/nixos/users/ironmoon/resources/";
 in
 {
   imports = [
@@ -29,7 +31,7 @@ in
 
   host = host;
 
-  home.file.".p10k.zsh".source = ./resources/.p10k.zsh;
+  home.file.".p10k.zsh".source = symlink "${dot-root}/.p10k.zsh";
 
   home.sessionVariables = {
     PAGER = "${pkgs.moar}/bin/moar";

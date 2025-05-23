@@ -38,6 +38,7 @@ in
     fingerprint = true;
   };
 
+  bundles.displaylink.enable = true;
   bundles.ctf.enable = true;
   bundles.printing.enable = false;
 

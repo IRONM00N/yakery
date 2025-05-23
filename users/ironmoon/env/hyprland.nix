@@ -45,7 +45,10 @@ in
   systemd.enable = false;
 
   settings = {
-    source = "~/.config/hypr/monitors.conf";
+    source = [
+      "~/.config/hypr/monitors.conf"
+      "~/.config/hypr/workspaces.conf"
+    ];
 
     exec-once = [
       "wl-paste --type text --watch cliphist -max-items 100000 store"
@@ -149,6 +152,11 @@ in
       "SUPER, right, movefocus, r"
       "SUPER, up, movefocus, u"
       "SUPER, down, movefocus, d"
+
+      "SUPER SHIFT, left, movewindow, l"
+      "SUPER SHIFT, right, movewindow, r"
+      "SUPER SHIFT, up, movewindow, u"
+      "SUPER SHIFT, down, movewindow, d"
 
       # Example special workspace (scratchpad)
       "SUPER, grave, togglespecialworkspace, magic"

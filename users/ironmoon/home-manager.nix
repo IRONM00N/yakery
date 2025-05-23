@@ -35,8 +35,8 @@ in
 
   home.sessionVariables = {
     PAGER = "${pkgs.moar}/bin/moar";
-    VISUAL = "${pkgs.vscode}/bin/code --wait --new-window";
-    SUDO_EDITOR = "${pkgs.vscode}/bin/code --wait --new-window --disable-workspace-trust";
+    EDITOR = "${pkgs.neovim}/bin/nvim";
+    VISUAL = "${pkgs.neovim}/bin/nvim";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
   };
 
@@ -80,7 +80,6 @@ in
 
   xdg.enable = true;
   home.preferXdgDirectories = true;
-
 
   # TODO: work on making these specialized for each DE
   # hyprland enables home-manager xdg config, while plasma doesn't. So we need to

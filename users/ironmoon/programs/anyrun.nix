@@ -41,20 +41,22 @@
     '';
 
   extraConfigFiles = {
-    "dictionary.ron".text = ''
-      Config(
-        prefix: ":def",
-        max_entries: 5,
-      )
-    '';
-    "symbols.ron".text = ''
-      Config(
-        prefix: ":sym",
-        max_entries: 3,
-        symbols: {
-          "shrug": "¯\\_(ツ)_/¯",
-        },
-      )
-    '';
+    "dictionary.ron".text = # ron
+      ''
+        Config(
+          prefix: ":def",
+          max_entries: 5,
+        )
+      '';
+    "symbols.ron".text = # ron
+      ''
+        Config(
+          prefix: ":sym",
+          max_entries: 3,
+          symbols: {
+            "shrug": "¯\\_(ツ)_/¯",
+          },
+        )
+      '';
   };
 }

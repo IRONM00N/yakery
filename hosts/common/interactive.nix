@@ -99,6 +99,7 @@ in
 
   # home-manager
   home-manager = {
+    backupFileExtension = ".bak";
     useUserPackages = true;
     useGlobalPkgs = true;
     sharedModules = [

@@ -79,6 +79,7 @@ in
   };
 
   xdg.enable = true;
+  xdg.userDirs.enable = true;
   home.preferXdgDirectories = true;
 
   # TODO: work on making these specialized for each DE

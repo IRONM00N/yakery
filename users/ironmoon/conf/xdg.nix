@@ -2,6 +2,7 @@
 {
   xdg.enable = true;
   xdg.userDirs.enable = true;
+
   home.preferXdgDirectories = true;
 
   # TODO: work on making these specialized for each DE
@@ -66,7 +67,6 @@
       x-scheme-handler/discord=vesktop.desktop
     */
     associations = {
-
       added = {
         "application/pdf" = "okular.desktop";
         "application/x-extension-htm" = "firefox.desktop";

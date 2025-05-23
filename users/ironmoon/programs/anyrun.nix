@@ -31,8 +31,6 @@
     ];
   };
 
-  # Inline comments are supported for language injection into
-  # multi-line strings with Treesitter! (Depends on your editor)
   extraCss = # css
     ''
       #window {

@@ -1,10 +1,9 @@
 { lib, config, ... }:
 {
   enable = true;
-  enableCompletion = false; # this is done elsewhere already and will slow start up
-  autosuggestion.enable = true;
-  syntaxHighlighting.enable = true;
   defaultKeymap = "emacs";
+
+  # note that i am using zplug over built=in homemanager for highlighting etc
 
   shellAliases = {
     ll = "ls -l";
@@ -25,8 +24,6 @@
   zplug = {
     enable = true;
     plugins = [
-      { name = "zsh-users/zsh-autosuggestions"; }
-      { name = "zsh-users/zsh-history-substring-search"; }
       {
         name = "romkatv/powerlevel10k";
         tags = [
@@ -35,6 +32,12 @@
           "if:\"((! $IS_TTY))\"" # don't enable powerlevel10k in TTY
         ];
       }
+      { name = "zsh-users/zsh-autosuggestions"; }
+      { name = "zsh-users/zsh-syntax-highlighting"; }
+      {
+        name = "zsh-users/zsh-history-substring-search";
+        tags = [ "as:plugin" ];
+      }
     ];
   };
 
@@ -42,30 +45,41 @@
   # it also defines the $IS_TTY variable, which is used to determine if we are in a TTY
   # so that we don't try rendering weird characters in a basic TTY terminal
   initContent = lib.mkMerge [
-    (lib.mkBefore ''
-      case $(tty) in
-        (/dev/tty[1-9]) IS_TTY=1;;
-                    (*) IS_TTY=0;;
-      esac
+    (lib.mkBefore # zsh
+      ''
+        case $(tty) in
+          (/dev/tty[1-9]) IS_TTY=1;;
+                      (*) IS_TTY=0;;
+        esac
 
-      # if ! (($IS_TTY)); then
-      #   # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-      #   # Initialization code that may require console input (password prompts, [y/n]
-      #   # confirmations, etc.) must go above this block; everything else may go below.
-      #   if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-      #     source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      #   fi
-      # fi
-    '')
+        if ! (($IS_TTY)); then
+          # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+          # Initialization code that may require console input (password prompts, [y/n]
+          # confirmations, etc.) must go above this block; everything else may go below.
+          if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+            source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+          fi
+        fi
+      ''
+    )
+    # zsh
     ''
       if ! (($IS_TTY)); then
         [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
       fi
 
+      bindkey '^[[3~' delete-char         # del
       bindkey '^H' backward-kill-word     # ctrl + backspace
       bindkey '^[[3;5~' kill-word         # ctrl + del
       bindkey '^[[1;5D' backward-word     # ctrl + left
       bindkey '^[[1;5C' forward-word      # ctrl + right
+
+      bindkey '^[[Z' reverse-menu-complete
+
+      bindkey '^[[A' history-substring-search-up
+      bindkey '^[OA' history-substring-search-up
+      bindkey '^[[B' history-substring-search-down
+      bindkey '^[OB' history-substring-search-down
 
       # stolen from oh-my-zsh
       WORDCHARS='''
@@ -106,5 +120,10 @@
       export LESS_TERMCAP_so=$'\e[01;33m\e[44m'
       export LESS_TERMCAP_us=$'\e[01;32m'
     ''
+    (lib.mkAfter # zsh
+      ''
+
+      ''
+    )
   ];
 }

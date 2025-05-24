@@ -64,6 +64,19 @@ in
       hyprlock
       hyprshot
       hyprpolkitagent
+
+      kdePackages.breeze
+      sddm-astronaut
     ];
+    services.displayManager.sddm = {
+      package = pkgs.kdePackages.sddm;
+      theme = "sddm-astronaut-theme";
+      extraPackages = with pkgs; [
+        sddm-astronaut
+        kdePackages.qtmultimedia
+        kdePackages.qtsvg
+        kdePackages.qtvirtualkeyboard
+      ];
+    };
   };
 }

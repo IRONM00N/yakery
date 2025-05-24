@@ -8,29 +8,29 @@
     size = 24;
   };
 
-  # qt = {
-  #   enable = false;
-  #   style = {
-  #     name = "breeze";
-  #     package = pkgs.kdePackages.breeze;
-  #   };
-  # };
+  qt = {
+    enable = true;
+    style = {
+      name = "BreezeDark";
+      package = pkgs.kdePackages.breeze;
+    };
+  };
 
   gtk = {
     enable = true;
     theme = {
-      name = "Breeze";
+      name = "Breeze-Dark";
       package = pkgs.kdePackages.breeze-gtk;
     };
 
     iconTheme = {
       package = pkgs.kdePackages.breeze-icons;
-      name = "Breeze";
+      name = "breeze-dark";
     };
   };
 
   dconf = {
-    enable = false;
+    enable = true;
     settings = {
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";

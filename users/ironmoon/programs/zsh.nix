@@ -17,6 +17,7 @@
     lg = "lazygit";
 
     kssh = "kitten ssh";
+    kdiff = "kitten diff";
     icat = "kitten icat";
   };
   history = {

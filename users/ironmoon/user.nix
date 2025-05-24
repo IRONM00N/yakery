@@ -74,6 +74,7 @@
       kdePackages.kservice
       kdePackages.dolphin
       kdePackages.kdegraphics-thumbnailers # previews
+      kdePackages.konsole
 
       # still want breeze
       kdePackages.breeze

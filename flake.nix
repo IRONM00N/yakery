@@ -145,6 +145,9 @@
             ++ (with pkgs; [
               nixd
               nixfmt-rfc-style
+              nil
+
+              lua-language-server
             ]);
         };
       });

@@ -240,10 +240,6 @@
       # TODO: https://github.com/NixOS/nixpkgs/pull/374068
       # TODO: https://github.com/NixOS/nixpkgs/issues/347350
       bitwarden-desktop
-
-      # LSPs
-
-      lua-language-server
     ]
     ++ additional-pkgs;
 }

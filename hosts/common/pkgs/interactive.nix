@@ -21,7 +21,6 @@ base-pkgs
   # pwndbg
 
   emacs-gtk
-  helix
   vscode.fhs # use the built-in settings sync
   zed-editor
 

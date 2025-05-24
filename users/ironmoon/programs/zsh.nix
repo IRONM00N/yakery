@@ -14,8 +14,10 @@
     edit = "code --wait --new-window --disable-workspace-trust";
     diff = "diff -u";
     vim = "nvim";
-    kssh = "kitten ssh";
     lg = "lazygit";
+
+    kssh = "kitten ssh";
+    icat = "kitten icat";
   };
   history = {
     size = 100000;
@@ -122,7 +124,16 @@
     ''
     (lib.mkAfter # zsh
       ''
-
+        vimd() {
+          local arg="$1"
+          local dir
+          if [ -d "$arg" ]; then
+            dir="$arg"
+          else
+            dir="$(dirname "$arg")"
+          fi
+          vim -c "cd $dir" "$arg"
+        }
       ''
     )
   ];

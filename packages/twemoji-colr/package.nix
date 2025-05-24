@@ -2,10 +2,17 @@
 # - https://github.com/jdecked/twemoji
 # - https://github.com/mozilla/twemoji-colr
 # uses pkgs-stable to avoid excessive rebuilds
-{ pkgs-stable, ... }:
+{
+  inputs,
+  lib,
+  system,
+  ...
+}:
 
 let
-  twemoji = pkgs-stable.fetchFromGitHub {
+  pkgs = import inputs.nixpkgs-24_11 { inherit system; };
+
+  twemoji = pkgs.fetchFromGitHub {
     name = "twemoji";
     owner = "IRONM00N";
     repo = "twemoji";
@@ -17,7 +24,7 @@ let
   # - change FONT_NAME to "Twemoji COLR" in Makefile
   # - change font name Gruntfile.js
   # - update package-lock.json to have `integrity` and `resolved` fields
-  twemoji-colr = pkgs-stable.fetchFromGitHub {
+  twemoji-colr = pkgs.fetchFromGitHub {
     name = "twemoji-colr";
     owner = "IRONM00N";
     repo = "twemoji-colr";
@@ -25,7 +32,7 @@ let
     hash = "sha256-iRHtmyCEzGYS1US4uB2laTmC6OhYO0FL0tJ/O1xhxcs=";
   };
 in
-pkgs-stable.buildNpmPackage (final: {
+pkgs.buildNpmPackage (final: {
   pname = "twemoji-colr";
   version = "15.1.1";
 
@@ -38,7 +45,7 @@ pkgs-stable.buildNpmPackage (final: {
 
   npmDepsHash = "sha256-fZ5Xd70r0t6WMjkAYCktasAuvif0KIIMz6L1Swvznpc=";
 
-  nativeBuildInputs = with pkgs-stable; [
+  nativeBuildInputs = with pkgs; [
     nodejs
     node-gyp
     pkg-config
@@ -51,7 +58,7 @@ pkgs-stable.buildNpmPackage (final: {
     perl
   ];
 
-  buildInputs = with pkgs-stable; [
+  buildInputs = with pkgs; [
     pixman
     cairo
     pango

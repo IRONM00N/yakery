@@ -1,10 +1,12 @@
 # TODO: fontconfig
 # TODO: customize using custom emoji fonts
 {
+  inputs,
   config,
   lib,
   pkgs,
   pkgs-stable,
+  system,
   ...
 }:
 with lib;
@@ -25,8 +27,23 @@ in
       enableDefaultPackages = false;
       packages =
         let
-          twemoji-colr = import ../packages/twemoji-colr/package.nix { inherit pkgs pkgs-stable; };
-          twemoji-cbdt = import ../packages/twemoji-cbdt/package.nix { inherit pkgs pkgs-stable; };
+          twemoji-colr = import ../packages/twemoji-colr/package.nix {
+            inherit
+              inputs
+              pkgs
+              pkgs-stable
+              lib
+              system
+              ;
+          };
+          twemoji-cbdt = import ../packages/twemoji-cbdt/package.nix {
+            inherit
+              inputs
+              pkgs
+              pkgs-stable
+              libsystem
+              ;
+          };
         in
         with pkgs;
         [

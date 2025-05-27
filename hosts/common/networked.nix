@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   imports = [
     ./all.nix
@@ -8,4 +8,7 @@
   networking.networkmanager.enable = true;
 
   networking.hostName = config.host.hostname;
+
+  programs.wireshark.enable = true;
+  programs.wireshark.package = pkgs.wireshark;
 }

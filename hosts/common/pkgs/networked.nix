@@ -9,7 +9,6 @@ base-pkgs
 
   wget
   nmap
-  wireshark
   dig
   netcat
 

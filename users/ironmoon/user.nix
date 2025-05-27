@@ -16,6 +16,7 @@
     "kvm"
     "dialout"
     "input"
+    "wireshark"
   ];
   shell = pkgs.zsh;
 

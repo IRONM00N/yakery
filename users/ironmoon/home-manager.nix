@@ -44,6 +44,7 @@ in
 
   programs = {
     zsh = importMod ./programs/zsh.nix;
+    fzf = importMod ./programs/fzf.nix;
     konsole = importMod ./programs/konsole.nix;
     okular = importMod ./programs/okular.nix;
     git = importMod ./programs/git.nix;

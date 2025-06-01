@@ -131,6 +131,8 @@
       obsidian
       krita
       pkgs-stable.aseprite # isn't cached and constant rebuilds are annoying
+      xournalpp
+      zotero
 
       # https://github.com/ibraheemdev/modern-unix
       lazygit

@@ -66,7 +66,7 @@
           pwntools
 
           pytest
-
+          pynvim
           # jd-gui # removed
         ];
     in

@@ -6,7 +6,7 @@ let
       mod = x: y: x - (x / y) * y;
       keys = genList (x: if x < 10 then toString (mod (x + 1) 10) else "F" + toString (x - 9)) 20;
       workspaces = genList (x: toString (x + 1)) 20;
-      altWorkspaces = genList (x: toString (x + 31)) 20;
+      altWorkspaces = genList (x: toString (x + 21)) 20;
 
       mkBinding =
         mod: key: ws:
@@ -48,6 +48,7 @@ in
     source = [
       "~/.config/hypr/monitors.conf"
       "~/.config/hypr/workspaces.conf"
+      "~/.config/hypr/devices.conf"
     ];
 
     exec-once = [

@@ -38,6 +38,7 @@ with pkgs;
 
   zsh
   neovim
+  helix
   gh
 
   man-pages

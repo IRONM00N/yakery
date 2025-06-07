@@ -206,6 +206,7 @@
       pkgs-stable.jetbrains.pycharm-professional
       pkgs-stable.jetbrains.clion
 
+      evil-helix
       code-cursor
 
       qbittorrent
@@ -243,6 +244,9 @@
       # TODO: https://github.com/NixOS/nixpkgs/pull/374068
       # TODO: https://github.com/NixOS/nixpkgs/issues/347350
       bitwarden-desktop
+
+      typescript
+      typescript-language-server
     ]
     ++ additional-pkgs;
 }

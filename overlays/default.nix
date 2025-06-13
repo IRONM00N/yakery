@@ -1,3 +1,2 @@
 [
-  (import ./paper.nix)
 ]

@@ -116,7 +116,10 @@ in
   programs = {
     firefox = importWith ./programs/firefox.nix;
     thunderbird = importWith ./programs/thunderbird.nix;
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = false; # this interacts poorly with ~/.zshrc
+    };
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;

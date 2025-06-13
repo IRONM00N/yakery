@@ -105,10 +105,12 @@ in
 
     # https://wiki.hyprland.org/Configuring/Variables/#misc
     misc = {
-      force_default_wallpaper = 0;
-      disable_splash_rendering = true;
+      disable_hyprland_logo = true; # default wallpaper
+      disable_splash_rendering = true; # splash test
       focus_on_activate = true;
       # disable_autoreload = true;
+
+      middle_click_paste = false;
     };
 
     gestures = {

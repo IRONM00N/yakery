@@ -4,15 +4,24 @@
   pkgs,
   ...
 }:
-let 
-inherit (lib) mkMerge mkBefore mkAfter getExe;
+let
+  inherit (lib)
+    mkMerge
+    mkBefore
+    mkAfter
+    getExe
+    ;
 in
 {
   enable = true;
   defaultKeymap = "emacs";
 
-  # note that i am using zplug over built=in homemanager for highlighting etc
-  enableCompletion = false; # manual
+  # note that i am using antidote over built=in homemanager for highlighting etc
+  enableCompletion = true;
+  completionInit = ''
+    autoload -zU compinit
+    compinit -C -u -d "$ZSH_CACHE_DIR/zcompdump"
+  '';
   shellAliases = {
     ll = "ls -l";
     la = "ls -lAh";
@@ -29,56 +38,41 @@ in
     size = 100000;
     path = "${config.xdg.dataHome}/zsh/history";
   };
-  my-zplug = {
+  antidote = {
     enable = true;
     plugins = [
-      {
-        name = "romkatv/powerlevel10k";
-        tags = [
-          "as:theme"
-          "depth:1"
-          "if:\"((! $IS_TTY))\"" # don't enable powerlevel10k in TTY
-        ];
-      }
-      { name = "zsh-users/zsh-autosuggestions"; }
-      { name = "zsh-users/zsh-syntax-highlighting"; }
-      {
-        name = "zsh-users/zsh-history-substring-search";
-        tags = [ "as:plugin" ];
-      }
+      "romkatv/powerlevel10k"
+      "zsh-users/zsh-syntax-highlighting"
+      "zsh-users/zsh-autosuggestions"
+      "zsh-users/zsh-history-substring-search"
     ];
-    package = import ../../../packages/patched-zplug/package.nix { inherit pkgs; };
   };
   # This ensures that the Powerlevel10k instant prompt is enabled
   # it also defines the $IS_TTY variable, which is used to determine if we are in a TTY
   # so that we don't try rendering weird characters in a basic TTY terminal
   initContent = mkMerge [
-    (mkBefore # zsh
-      ''
-        case $(tty) in
-          (/dev/tty[1-9]) IS_TTY=1;;
-                      (*) IS_TTY=0;;
-        esac
+    (mkBefore ''
+      case $(tty) in
+        (/dev/tty[1-9]) IS_TTY=1;;
+                    (*) IS_TTY=0;;
+      esac
 
-        # if ! (($IS_TTY)); then 
-        #   zmodload zsh/zprof
-        # fi
-              
-        if ! (($IS_TTY)); then
-          # see: https://github.com/romkatv/powerlevel10k/issues/702#issuecomment-626222730
-          emulate zsh -c "$(${getExe pkgs.direnv} export zsh)"
+      if ! (($IS_TTY)); then
+        # see: https://github.com/romkatv/powerlevel10k/issues/702#issuecomment-626222730
+        emulate zsh -c "$(${getExe pkgs.direnv} export zsh)"
 
-          if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-            source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-          fi
-          
-          emulate zsh -c "$(${getExe pkgs.direnv} hook zsh)"
-        else
-          eval "$(${getExe pkgs.direnv} hook zsh)"
+        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
         fi
-        
-      ''
-    )
+
+        emulate zsh -c "$(${getExe pkgs.direnv} hook zsh)"
+      else
+        eval "$(${getExe pkgs.direnv} hook zsh)"
+      fi
+
+      ZSH_CACHE_DIR="''${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+      mkdir -p "$ZSH_CACHE_DIR"
+    '')
     # zsh
     ''
       if ! (($IS_TTY)); then
@@ -137,35 +131,33 @@ in
       export LESS_TERMCAP_so=$'\e[01;33m\e[44m'
       export LESS_TERMCAP_us=$'\e[01;32m'
     ''
-    (mkAfter # zsh
-      ''
-        vimd() {
-          local arg="$1"
-          local dir
-          if [ -d "$arg" ]; then
-            dir="$arg"
-          else
-            dir="$(dirname "$arg")"
-          fi
-          vim -c "cd $dir" "$arg"
-        }
-        unsymlink() {
-          local target="$1"
-          if [[ -L $target ]]; then
-            cp --remove-destination "$(readlink -f "$target")" "$target"
-            echo "Unsymlinked: $target"
-          else
-            echo "Not a symlink: $target"
-          fi
-        }
-        nixos-update() {
-          nix flake update --flake /etc/nixos
-        }
-        # TODO: use current specialisation
-        nixos-switch() {
-          sudo nixos-rebuild switch --log-format internal-json -v |& nom --json
-        }
-      ''
-    )
+    (mkAfter ''
+      vimd() {
+        local arg="$1"
+        local dir
+        if [ -d "$arg" ]; then
+          dir="$arg"
+        else
+          dir="$(dirname "$arg")"
+        fi
+        vim -c "cd $dir" "$arg"
+      }
+      unsymlink() {
+        local target="$1"
+        if [[ -L $target ]]; then
+          cp --remove-destination "$(readlink -f "$target")" "$target"
+          echo "Unsymlinked: $target"
+        else
+          echo "Not a symlink: $target"
+        fi
+      }
+      nixos-update() {
+        nix flake update --flake /etc/nixos
+      }
+      # TODO: use current specialisation
+      nixos-switch() {
+        sudo nixos-rebuild switch --log-format internal-json -v |& nom --json
+      }
+    '')
   ];
 }

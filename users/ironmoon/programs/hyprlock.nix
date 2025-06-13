@@ -31,8 +31,8 @@ in
         dots_center = true;
         fade_on_empty = false;
         font_color = "rgb(202, 211, 245)";
-        inner_color = "rgb(82, 116, 188)"; # rgb(82, 116, 188)
-        outer_color = "rgb(4, 58, 104)"; # rgb(4, 58, 104)
+        inner_color = "rgb(82, 116, 188)";
+        outer_color = "rgb(4, 58, 104)";
         outline_thickness = 4;
         rounding = 4;
         placeholder_text = "<span foreground=\"##cad3f5\">Password...</span>";

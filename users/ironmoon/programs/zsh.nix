@@ -51,7 +51,7 @@ in
   # it also defines the $IS_TTY variable, which is used to determine if we are in a TTY
   # so that we don't try rendering weird characters in a basic TTY terminal
   initContent = mkMerge [
-    (mkBefore ''
+    (mkBefore /* zsh */ ''
       case $(tty) in
         (/dev/tty[1-9]) IS_TTY=1;;
                     (*) IS_TTY=0;;
@@ -73,7 +73,7 @@ in
       ZSH_CACHE_DIR="''${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
       mkdir -p "$ZSH_CACHE_DIR"
     '')
-    # zsh
+    /* zsh */
     ''
       if ! (($IS_TTY)); then
         [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
@@ -131,7 +131,7 @@ in
       export LESS_TERMCAP_so=$'\e[01;33m\e[44m'
       export LESS_TERMCAP_us=$'\e[01;32m'
     ''
-    (mkAfter ''
+    (mkAfter /* zsh */ ''
       vimd() {
         local arg="$1"
         local dir

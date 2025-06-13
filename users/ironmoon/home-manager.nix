@@ -21,6 +21,7 @@ let
     };
   symlink = config.lib.file.mkOutOfStoreSymlink;
   dot-root = "/etc/nixos/users/ironmoon/resources/";
+  my-modules = import ./modues/default.nix;
 in
 {
   imports = [
@@ -29,7 +30,7 @@ in
     ./services/kbuildsycoca6.nix
     ./conf/theme.nix
     ./conf/xdg.nix
-  ];
+  ] ++ my-modules;
 
   host = host;
 

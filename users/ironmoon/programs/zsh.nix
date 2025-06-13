@@ -1,17 +1,22 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let 
+inherit (lib) mkMerge mkBefore mkAfter getExe;
+in
 {
   enable = true;
   defaultKeymap = "emacs";
 
   # note that i am using zplug over built=in homemanager for highlighting etc
-
+  enableCompletion = false; # manual
   shellAliases = {
     ll = "ls -l";
     la = "ls -lAh";
     l = "ls -lah";
-    nixos-update = "nix flake update --flake /etc/nixos";
-    nixos-switch = "sudo nixos-rebuild switch --log-format internal-json -v |& nom --json";
-    edit = "code --wait --new-window --disable-workspace-trust";
     diff = "diff -u";
     vim = "nvim";
     lg = "lazygit";
@@ -24,7 +29,7 @@
     size = 100000;
     path = "${config.xdg.dataHome}/zsh/history";
   };
-  zplug = {
+  my-zplug = {
     enable = true;
     plugins = [
       {
@@ -42,27 +47,36 @@
         tags = [ "as:plugin" ];
       }
     ];
+    package = import ../../../packages/patched-zplug/package.nix { inherit pkgs; };
   };
-
   # This ensures that the Powerlevel10k instant prompt is enabled
   # it also defines the $IS_TTY variable, which is used to determine if we are in a TTY
   # so that we don't try rendering weird characters in a basic TTY terminal
-  initContent = lib.mkMerge [
-    (lib.mkBefore # zsh
+  initContent = mkMerge [
+    (mkBefore # zsh
       ''
         case $(tty) in
           (/dev/tty[1-9]) IS_TTY=1;;
                       (*) IS_TTY=0;;
         esac
 
+        # if ! (($IS_TTY)); then 
+        #   zmodload zsh/zprof
+        # fi
+              
         if ! (($IS_TTY)); then
-          # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-          # Initialization code that may require console input (password prompts, [y/n]
-          # confirmations, etc.) must go above this block; everything else may go below.
+          # see: https://github.com/romkatv/powerlevel10k/issues/702#issuecomment-626222730
+          emulate zsh -c "$(${getExe pkgs.direnv} export zsh)"
+
           if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
             source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
           fi
+          
+          emulate zsh -c "$(${getExe pkgs.direnv} hook zsh)"
+        else
+          eval "$(${getExe pkgs.direnv} hook zsh)"
         fi
+        
       ''
     )
     # zsh
@@ -123,7 +137,7 @@
       export LESS_TERMCAP_so=$'\e[01;33m\e[44m'
       export LESS_TERMCAP_us=$'\e[01;32m'
     ''
-    (lib.mkAfter # zsh
+    (mkAfter # zsh
       ''
         vimd() {
           local arg="$1"
@@ -134,6 +148,22 @@
             dir="$(dirname "$arg")"
           fi
           vim -c "cd $dir" "$arg"
+        }
+        unsymlink() {
+          local target="$1"
+          if [[ -L $target ]]; then
+            cp --remove-destination "$(readlink -f "$target")" "$target"
+            echo "Unsymlinked: $target"
+          else
+            echo "Not a symlink: $target"
+          fi
+        }
+        nixos-update() {
+          nix flake update --flake /etc/nixos
+        }
+        # TODO: use current specialisation
+        nixos-switch() {
+          sudo nixos-rebuild switch --log-format internal-json -v |& nom --json
         }
       ''
     )

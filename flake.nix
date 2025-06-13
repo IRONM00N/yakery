@@ -62,8 +62,10 @@
       ...
     }:
     let
+      overlays = import ./overlays/default.nix;
       lib = nixpkgs.lib;
-      eachSystem = f: lib.genAttrs (import systems) (system: f (import nixpkgs { inherit system; }));
+      eachSystem =
+        f: lib.genAttrs (import systems) (system: f (import nixpkgs { inherit system overlays; }));
       treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
     in
     let
@@ -71,7 +73,7 @@
         allowUnfree = true;
       };
       nixConfig = {
-        nixpkgs.overlays = import ./overlays/default.nix;
+        nixpkgs.overlays = overlays;
         nixpkgs.config = base-nixpkgs-config;
 
         nix.settings.experimental-features = [
@@ -121,7 +123,7 @@
       homeConfigurations = {
         "ironmoon" = home-manager.lib.homeManagerConfiguration {
           # todo make this nicer
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = import nixpkgs { inherit system overlays; };
           extraSpecialArgs = { inherit inputs; };
           modules = [
             {

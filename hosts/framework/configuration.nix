@@ -41,6 +41,12 @@ in
   bundles.displaylink.enable = true;
   bundles.ctf.enable = true;
   bundles.printing.enable = false;
+  bundles.virtualisation = {
+    enable = true;
+    libvirt = true;
+    docker = true;
+    waydroid = true;
+  };
 
   boot.loader = {
     efi = {

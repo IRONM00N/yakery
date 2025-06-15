@@ -83,11 +83,6 @@ in
   services.openssh.enable = true;
   services.udisks2.enable = true; # for calibre
 
-  # virtualization
-  virtualisation.docker.enable = true;
-  virtualisation.libvirtd.enable = true;
-  programs.virt-manager.enable = true;
-
   # user account.
   # set a password with `passwd`
   users.users.ironmoon = import ../../users/ironmoon/user.nix (

@@ -8,6 +8,7 @@
     ./mullvad-vpn.nix
     ./ctf.nix
     ./printing.nix
+    ./virtualisation.nix
 
     ./displaylink.nix
   ];

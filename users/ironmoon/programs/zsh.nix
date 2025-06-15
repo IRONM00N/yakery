@@ -159,6 +159,10 @@ in
         sudo nixos-rebuild switch "''${1:+--specialisation}" "''${1:+$1}" \
           --keep-going --log-format=internal-json -v |& nom --json
       }
+      nixos-boot() {
+        sudo nixos-rebuild boot \
+          --keep-going --log-format=internal-json -v |& nom --json
+      }
     '')
   ];
 }

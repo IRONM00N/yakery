@@ -156,7 +156,8 @@ in
       }
       # TODO: use current specialisation
       nixos-switch() {
-        sudo nixos-rebuild switch --log-format internal-json -v |& nom --json
+        sudo nixos-rebuild switch "''${1:+--specialisation}" "''${1:+$1}" \
+          --keep-going --log-format=internal-json -v |& nom --json
       }
     '')
   ];

@@ -9,8 +9,13 @@
   system,
   ...
 }:
-with lib;
 let
+  inherit (lib)
+    types
+    mkOption
+    mkIf
+    libsystem
+    ;
   cfg = config.bundles.fonts;
 in
 {

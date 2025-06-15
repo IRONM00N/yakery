@@ -4,8 +4,8 @@
   pkgs,
   ...
 }:
-with lib;
 let
+  inherit (lib) types mkOption mkIf;
   cfg = config.bundles.displaylink;
 in
 {

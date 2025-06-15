@@ -4,8 +4,13 @@
   pkgs,
   ...
 }:
-with lib;
 let
+  inherit (lib)
+    types
+    mkOption
+    mkIf
+    mkDefault
+    ;
   cfg = config.bundles.mullvad-vpn;
 in
 {

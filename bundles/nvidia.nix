@@ -3,8 +3,8 @@
   lib,
   ...
 }:
-with lib;
 let
+  inherit (lib) types mkOption mkIf;
   cfg = config.bundles.nvidia;
 in
 {

@@ -4,7 +4,6 @@
 # uses pkgs-stable to avoid excessive rebuilds
 {
   inputs,
-  lib,
   system,
   ...
 }:

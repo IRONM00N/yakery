@@ -1,5 +1,7 @@
 { lib, ... }:
-with lib;
+let
+  inherit (lib) mkOption types;
+in
 {
   options.host = {
     id = mkOption {
@@ -41,6 +43,12 @@ with lib;
       type = types.bool;
       default = false;
       description = "shitty graphics card";
+    };
+
+    additional-user-pkgs = mkOption {
+      type = types.listOf types.package;
+      default = [ ];
+      description = "Additional user packages specific to the host.";
     };
   };
 }

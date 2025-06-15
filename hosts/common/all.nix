@@ -1,8 +1,8 @@
-{ ... }:
+args@{ ... }:
 {
   # all bundles are behind an `enable` option
   imports = [
-    ../../bundles/default.nix
+    (import ../../bundles/default.nix args)
   ];
 
   # Set your time zone.
@@ -21,4 +21,6 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
+
+  environment.systemPackages = import ./pkgs/base.nix args;
 }

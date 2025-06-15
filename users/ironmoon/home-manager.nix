@@ -1,36 +1,26 @@
-{
-  inputs,
-  config,
-  lib,
+args@{
   pkgs,
-  pkgs-stable,
   host,
+  config,
   ...
 }:
 let
-  importMod =
-    path:
-    import path {
-      inherit
-        inputs
-        config
-        lib
-        pkgs
-        pkgs-stable
-        ;
-    };
   symlink = config.lib.file.mkOutOfStoreSymlink;
-  dot-root = "/etc/nixos/users/ironmoon/resources/";
-  my-modules = import ./modues/default.nix;
+  my-modules = import ./modules/default.nix;
+  bundles = import ./bundles/default.nix;
+  importWith = path: import path args;
 in
 {
-  imports = [
-    ../../hosts/options.nix
-    ./services/network-manager-applet.nix
-    ./services/kbuildsycoca6.nix
-    ./conf/theme.nix
-    ./conf/xdg.nix
-  ] ++ my-modules;
+  imports =
+    [
+      ../../hosts/options.nix
+      ./services/network-manager-applet.nix
+      ./services/kbuildsycoca6.nix
+      ./conf/theme.nix
+      ./conf/xdg.nix
+    ]
+    ++ my-modules
+    ++ bundles;
 
   host = host;
 
@@ -41,32 +31,32 @@ in
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
   };
 
-  home.file.".p10k.zsh".source = symlink "${dot-root}/.p10k.zsh";
+  home.file.".p10k.zsh".source = symlink "/etc/nixos/users/ironmoon/resources/.p10k.zsh";
 
   programs = {
-    zsh = importMod ./programs/zsh.nix;
-    fzf = importMod ./programs/fzf.nix;
-    konsole = importMod ./programs/konsole.nix;
-    okular = importMod ./programs/okular.nix;
-    git = importMod ./programs/git.nix;
-    firefox = importMod ./programs/firefox.nix;
-    direnv = importMod ./programs/direnv.nix;
+    zsh = importWith ./programs/zsh.nix;
+    fzf = importWith ./programs/fzf.nix;
+    konsole = importWith ./programs/konsole.nix;
+    okular = importWith ./programs/okular.nix;
+    git = importWith ./programs/git.nix;
+    firefox = importWith ./programs/firefox.nix;
+    direnv = importWith ./programs/direnv.nix;
 
-    waybar = importMod ./programs/waybar.nix;
-    hyprlock = importMod ./programs/hyprlock.nix;
-    kitty = importMod ./programs/kitty.nix;
-    anyrun = importMod ./programs/anyrun.nix;
+    waybar = importWith ./programs/waybar.nix;
+    hyprlock = importWith ./programs/hyprlock.nix;
+    kitty = importWith ./programs/kitty.nix;
+    anyrun = importWith ./programs/anyrun.nix;
   };
 
   services = {
-    dunst = importMod ./services/dunst.nix;
-    hypridle = importMod ./services/hypridle.nix;
-    hyprpaper = importMod ./services/hyprpaper.nix;
-    hyprpolkitagent = importMod ./services/hyprpolkitagent.nix;
+    dunst = importWith ./services/dunst.nix;
+    hypridle = importWith ./services/hypridle.nix;
+    hyprpaper = importWith ./services/hyprpaper.nix;
+    hyprpolkitagent = importWith ./services/hyprpolkitagent.nix;
   };
 
-  programs.plasma = importMod ./env/plasma.nix;
-  wayland.windowManager.hyprland = importMod ./env/hyprland.nix;
+  programs.plasma = importWith ./env/plasma.nix;
+  wayland.windowManager.hyprland = importWith ./env/hyprland.nix;
 
   # The state version is required and should stay at the version you
   # originally installed.

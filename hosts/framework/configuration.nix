@@ -2,33 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{
-  inputs,
-  config,
-  lib,
-  pkgs,
-  pkgs-stable,
-  system,
-  ...
-}:
-let
-  additional-user-pkgs = import ./additional-user-pkgs.nix { inherit config pkgs; };
-  interactive-pkgs = import ../common/pkgs/interactive.nix { inherit config pkgs; };
-in
+args@{ pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
-    (import ../common/interactive.nix {
-      inherit
-        inputs
-        config
-        lib
-        pkgs
-        pkgs-stable
-        additional-user-pkgs
-        system
-        ;
-    })
+    (import ../common/interactive.nix args)
   ];
 
   host = {
@@ -36,6 +14,7 @@ in
     hostname = "framework";
     laptop = true;
     fingerprint = true;
+    additional-user-pkgs = import ./additional-user-pkgs.nix args;
   };
 
   bundles.displaylink.enable = true;
@@ -83,13 +62,11 @@ in
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages =
-    interactive-pkgs
-    ++ (with pkgs; [
-      fprintd
-      # man-pages-posix
-      powertop
-    ]);
+  environment.systemPackages = with pkgs; [
+    fprintd
+    # man-pages-posix
+    powertop
+  ];
 
   # fingerprint reader support
   services.fprintd.enable = true;

@@ -1,7 +1,6 @@
 {
   pkgs,
   pkgs-stable,
-  additional-pkgs,
   config,
   ...
 }:
@@ -248,5 +247,5 @@
       typescript
       typescript-language-server
     ]
-    ++ additional-pkgs;
+    ++ config.host.additional-user-pkgs;
 }

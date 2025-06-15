@@ -1,10 +1,7 @@
 { pkgs, ... }:
 
-let
-  base-pkgs = import ./networked.nix { inherit pkgs; };
-in
-base-pkgs
-++ (with pkgs; [
+with pkgs;
+[
   qemu
 
   exiftool
@@ -32,4 +29,4 @@ base-pkgs
 
   kdePackages.qtwayland
   kdePackages.qtsvg
-])
+]

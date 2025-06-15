@@ -1,29 +1,14 @@
-{
+args@{
   inputs,
   config,
   lib,
   pkgs,
   pkgs-stable,
-  additional-user-pkgs,
-  system,
   ...
 }:
-let
-  args = {
-    inherit
-      inputs
-      config
-      lib
-      pkgs
-      pkgs-stable
-      system
-      ;
-  };
-  importWith = path: import path args;
-in
 {
   imports = [
-    ./networked.nix
+    (import ./networked.nix args)
   ];
 
   bundles.fonts.enable = true;
@@ -31,8 +16,8 @@ in
   bundles.nvidia.enable = config.host.nvidia;
 
   specialisation = {
-    kde.configuration = importWith ./specializations/kde.nix;
-    hyprland.configuration = importWith ./specializations/hyprland.nix;
+    kde.configuration = import ./specializations/kde.nix args;
+    hyprland.configuration = import ./specializations/hyprland.nix args;
   };
 
   # SECURITY: this is fine for single user, personal systems.
@@ -85,12 +70,7 @@ in
 
   # user account.
   # set a password with `passwd`
-  users.users.ironmoon = import ../../users/ironmoon/user.nix (
-    {
-      additional-pkgs = additional-user-pkgs;
-    }
-    // args
-  );
+  users.users.ironmoon = import ../../users/ironmoon/user.nix args;
 
   # home-manager
   home-manager = {
@@ -103,14 +83,14 @@ in
     ];
     extraSpecialArgs = {
       inherit pkgs-stable inputs;
-      host = config.host;
+      inherit (config) host;
     };
     users.ironmoon = import ../../users/ironmoon/home-manager.nix;
   };
 
   programs = {
-    firefox = importWith ./programs/firefox.nix;
-    thunderbird = importWith ./programs/thunderbird.nix;
+    firefox = import ./programs/firefox.nix;
+    thunderbird = import ./programs/thunderbird.nix;
     zsh = {
       enable = true;
       enableCompletion = false; # this interacts poorly with ~/.zshrc
@@ -138,4 +118,6 @@ in
   # generate man pages
   # documentation.dev.enable = true;
   # documentation.man.generateCaches = true;
+
+  environment.systemPackages = import ./pkgs/interactive.nix args;
 }

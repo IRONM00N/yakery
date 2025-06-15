@@ -50,7 +50,6 @@
 
   outputs =
     inputs@{
-      self,
       nixpkgs,
       nixpkgs-stable,
       home-manager,
@@ -66,7 +65,7 @@
       lib = nixpkgs.lib;
       eachSystem =
         f: lib.genAttrs (import systems) (system: f (import nixpkgs { inherit system overlays; }));
-      treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
+      treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./nix/treefmt.nix);
     in
     let
       base-nixpkgs-config = {

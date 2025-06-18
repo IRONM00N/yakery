@@ -50,5 +50,11 @@ in
       default = [ ];
       description = "Additional user packages specific to the host.";
     };
+
+    out-of-store-symlinks = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Whether to use impure out of store symlinks for some dotfiles.";
+    };
   };
 }

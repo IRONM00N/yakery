@@ -15,6 +15,7 @@ args@{ pkgs, ... }:
     laptop = true;
     fingerprint = true;
     additional-user-pkgs = import ./additional-user-pkgs.nix args;
+    out-of-store-symlinks = true;
   };
 
   bundles.displaylink.enable = true;

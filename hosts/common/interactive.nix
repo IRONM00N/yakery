@@ -1,14 +1,13 @@
 args@{
-  inputs,
   config,
   lib,
   pkgs,
-  pkgs-stable,
   ...
 }:
 {
   imports = [
     (import ./networked.nix args)
+    ../../users/home-manager.nix
   ];
 
   bundles.fonts.enable = true;
@@ -73,20 +72,6 @@ args@{
   users.users.ironmoon = import ../../users/ironmoon/user.nix args;
 
   # home-manager
-  home-manager = {
-    backupFileExtension = ".bak";
-    useUserPackages = true;
-    useGlobalPkgs = true;
-    sharedModules = [
-      # needed even when not using fill kde (konsole, dolphin, etc)
-      inputs.plasma-manager.homeManagerModules.plasma-manager
-    ];
-    extraSpecialArgs = {
-      inherit pkgs-stable inputs;
-      inherit (config) host;
-    };
-    users.ironmoon = import ../../users/ironmoon/home-manager.nix;
-  };
 
   programs = {
     firefox = import ./programs/firefox.nix;

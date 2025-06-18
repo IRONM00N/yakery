@@ -1,11 +1,11 @@
 args@{
   pkgs,
   host,
-  config,
+  my-utils,
   ...
 }:
 let
-  symlink = config.lib.file.mkOutOfStoreSymlink;
+  inherit (my-utils) symlink;
   my-modules = import ./modules/default.nix;
   bundles = import ./bundles/default.nix;
   importWith = path: import path args;
@@ -24,6 +24,8 @@ in
 
   host = host;
 
+  bundles.eww.enable = true;
+
   home.sessionVariables = {
     PAGER = "${pkgs.moar}/bin/moar --no-linenumbers";
     EDITOR = "${pkgs.neovim}/bin/nvim";
@@ -31,7 +33,8 @@ in
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
   };
 
-  home.file.".p10k.zsh".source = symlink "/etc/nixos/users/ironmoon/resources/.p10k.zsh";
+  # home.file.".p10k.zsh".source = symlink ./resources/.p10k.zsh;
+  home.file.".p10k.zsh".source = symlink "ironmoon/resources/.p10k.zsh";
 
   programs = {
     zsh = importWith ./programs/zsh.nix;

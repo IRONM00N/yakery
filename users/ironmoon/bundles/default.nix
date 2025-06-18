@@ -1,2 +1,3 @@
 [
+  ./eww/default.nix
 ]
